@@ -1,0 +1,22 @@
+
+Use the following code to update all the existing records of the Account Object:
+
+List<Account> AccountList = [SELECT id, name FROM Account];
+
+for(Account singleAccount: AccountList){
+    singleAccount.AnnualRevenue = 500000;
+    singleAccount.YearStarted ='2045';
+}
+
+update AccountList;
+Use the following code to update the Account Number field of the Account object if account number is empty (Null).
+
+List<Account> AccountList = [SELECT id, name FROM Account WHERE AccountNumber=Null];
+
+for(Account singleAccount: AccountList){
+    singleAccount.AccountNumber = 'ACCOUNTNUMBER';
+}
+
+update AccountList;
+
+System.debug(AccountList.size());
