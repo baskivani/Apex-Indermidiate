@@ -1,22 +1,39 @@
 
 Use the following code to update all the existing records of the Account Object:
 
-List<Account> AccountList = [SELECT id, name FROM Account];
-
-for(Account singleAccount: AccountList){
-    singleAccount.AnnualRevenue = 500000;
-    singleAccount.YearStarted ='2045';
-}
-
-update AccountList;
+ public static void updateAnnualRevenueAndYearStartedOfAnAccount(){
+        
+        List<Account> accList = [Select Id, AnnualRevenue,YearStarted From Account];
+        List<Account> updatedList = new List<Account>();
+        For(Account acc : accList){
+            
+            acc.AnnualRevenue = 500000;
+            acc.YearStarted = '2040';
+            updatedList.add(acc);
+        }
+        if (updatedList.size() != 0){
+            
+            Update updatedList;
+            
+        }
+        // // In Anonymous window 
+        // ApexIndermediateExamples.updateAnnualRevenueAndYearStartedOfAnAccount();         
+    }  
+   
+  ---------------------------------------------------------------------------------- 
 Use the following code to update the Account Number field of the Account object if account number is empty (Null).
 
-List<Account> AccountList = [SELECT id, name FROM Account WHERE AccountNumber=Null];
-
-for(Account singleAccount: AccountList){
-    singleAccount.AccountNumber = 'ACCOUNTNUMBER';
+public static void UpdateAccountNumberOfAccount(String AccountNumber){
+        
+		List<Account> accList = [Select Id, AccountNumber, Name From Account Where AccountNumber =Null];
+		List<Account> updatedList = new List<Account>();
+       	
+        	For(Account acc : accList){
+                acc.AccountNumber = AccountNumber;
+                updatedList.add(acc);        
+        }
+        if (updatedList.size() != 0){
+            update UpdatedList;
+        }
+    
 }
-
-update AccountList;
-
-System.debug(AccountList.size());
