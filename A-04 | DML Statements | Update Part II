@@ -1,0 +1,6 @@
+
+Fill in the blanks with proper DML statement:
+
+Account ac = [SELECT Id, Name FROM Account WHERE Name='Facebook' LIMIT 1];
+ac.AccountNumber='AS56RF54R';
+update  ac;
