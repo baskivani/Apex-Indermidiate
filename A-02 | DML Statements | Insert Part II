@@ -1,0 +1,122 @@
+Lesson: 02 | DML Statements | Insert Part II
+--------------------------------------------------------------------------
+Exercise 1:Creating a New Automated User
+User Story :
+As a Salesforce administrator, I want to automate the creation of a new user with the System Administrator profile. This will streamline the user onboarding process and ensure consistency in user account setup.
+
+Acceptance Criteria:
+
+A new user with the first name 'AdarUlas' and last name 'Zeylan' should be created.
+The user's alias should be generated using the first two characters of the first name and the first two characters of the last name in lowercase.
+The user's email address should follow the format 'Baran.Zeylan@amazon.com'.
+The user's Salesforce username for development purposes should be 'Baran.Zeylan@amazon.com.dev'.
+The user's time zone should be set to 'America/New_York'.
+The user's locale should be set to 'en_US'.
+The user's email encoding key should be set to 'UTF-8'.
+The user's language locale key should be set to 'en_US'.
+The user should be assigned the 'System Administrator' profile.
+
+Apex Codes:
+
+public class ApexIndermediateExamples {
+
+    public static void createUser(){
+        
+        Profile pr = [Select Id, Name From profile Where Name='System Administrator'];
+        
+        User newUser = new User();
+        
+        String FirstName ='AdarUlas';
+        String LastName ='Zeylan';
+        
+newUser.FirstName =FirstName;
+newUser.LastName =LastName;
+newUser.Alias=FirstName.substring(0,2)+LastName.substring(0, 2).toLowerCase();
+newUser.Email=FirstName+'.'+LastName+'@amazon.com';
+newUser.username=FirstName+'.'+LastName+'@amazon.com.dev';
+newUser.TimeZoneSidKey='America/New_York';
+newUser.LocaleSidKey='en_US';
+newUser.EmailEncodingKey='UTF-8';
+newUser.LanguageLocaleKey='en_US';
+newUser.ProfileId=pr.Id;
+ 
+insert newUser;
+        
+    }
+}
+// In Anonymous window 
+// ApexIndermediateExamples.createUser();
+
+-------------------------------------------------------------
+Exercise 2: Account and Contact Generation
+User Story :
+Create a new Apex class named "ApexIndermediateExamples"  within your Salesforce development environment.
+
+Implement a method named generateAccounts within your class with the following signature:
+
+public static void generateAccounts(String rating, Integer repetition, Boolean createContacts);
+This method should create a specified number of accounts with the given rating. If createContacts is set to true, it should also create associated contacts for each account.
+
+Apex Codes:
+public class ApexIndermediateExamples {
+    
+    public static void createUser(){
+        
+        Profile pr = [Select Id, Name From profile Where Name='System Administrator'];
+        
+        User newUser = new User();
+        
+        String FirstName ='AdarUlas';
+        String LastName ='Zeylan';
+        
+        newUser.FirstName =FirstName;
+        newUser.LastName =LastName;
+        newUser.Alias=FirstName.substring(0,2)+LastName.substring(0, 2).toLowerCase();
+        newUser.Email=FirstName+'.'+LastName+'@amazon.com';
+        newUser.username=FirstName+'.'+LastName+'@amazon.com.dev';
+        newUser.TimeZoneSidKey='America/New_York';
+        newUser.LocaleSidKey='en_US';
+        newUser.EmailEncodingKey='UTF-8';
+        newUser.LanguageLocaleKey='en_US';
+        newUser.ProfileId=pr.Id;
+        
+        insert newUser;
+        // In Anonymous window 
+        // ApexIndermediateExamples.createUser();   
+    }
+/*....................................................................................................*/
+    
+    public static void generateAccounts(String rating, Integer repitition, Boolean createContacts){
+        
+        List<Account> accountList = new List<Account>();
+        List<Contact> contactList = new List<Contact>();
+        
+        for (Integer i=1; i<=repitition; i++){
+            
+            Account acc = new Account();
+            acc.Name = 'Test '+i;
+            acc.Active__c = 'Yes';
+            acc.Rating =rating;
+            accountList.add(acc);
+        }
+        insert accountList;        
+        if(createContacts){
+            Integer contactCounter=1;
+            for(Account acc : accountList){
+                Contact con = new Contact();
+                con.LastName = 'Test '+contactCounter;
+                con.AccountId =acc.Id;
+                contactList.add(con);
+                contactCounter++;
+            }
+            if(contactList.size() != 0){
+                insert contactList;
+            }
+        }
+ // In Anonymous window 
+ // ApexIndermediateExamples.generateAccounts();         
+    }  
+/*....................................................................................................*/
+
+}
+
