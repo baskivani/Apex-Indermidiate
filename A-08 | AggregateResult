@@ -1,0 +1,61 @@
+Aggregate functions in salesforce include AVG(), COUNT(), MIN(), MAX(), SUM(). The functions like SUM() and MAX() in SOQL allow to roll up and summarize the data in a query. The GROUP BY clause in a SOQL query is to avoid iterating through individual query results and used to specify a group of records instead of processing many individual records.
+
+AVG() – Returns the average value of a numeric field
+COUNT() – Returns the number of rows matching the query criteria
+MIN() – Returns the minimum value of a field
+MAX() – Returns the maximum value of a field
+SUM() – Returns the total sum of a numeric field
+You can use aggregate functions without using a GROUP BY clause.
+
+For example, you could use the AVG() aggregate function to find the average Amount for all your opportunities.
+
+AggregateResult[] groupedResults = [SELECT AVG(Amount)AV FROM Opportunity];
+
+Object avgAmount = groupedResults[0].get('AV');
+
+System.debug(avgAmount);
+OR
+
+AggregateResult[] groupedResults = [SELECT AVG(Amount) FROM Opportunity];
+
+Object avgAmount = groupedResults[0].get('expr0');
+
+System.debug(avgAmount);
+Aggregate functions become a more powerful tool to generate reports when you use them with a GROUP BY clause.
+
+For example, you could find the average Amount for all your opportunities by Account.
+
+List<AggregateResult> myacc =[SELECT  StageName , MIN(Amount) FROM Opportunity GROUP BY StageName ];
+
+for (AggregateResult x:myacc ){
+    
+    System.debug(x);
+}
+
+
+ In the following example, we updated the Annual Revenue of each Account with sum of the Amounts of all the related Opportunities
+
+List<Account> acList = [SELECT Id, AnnualRevenue FROM Account ];
+
+for(Account ac : acList){
+    
+    AggregateResult[] aggList= [SELECT AccountId, Sum(Amount) FROM Opportunity WHERE AccountId =: ac.Id  GROUP BY AccountId ];
+    for (AggregateResult agg : aggList) {
+        ac.put('AnnualRevenue', agg.get('expr0'));
+    }
+}
+update acList;
+You can also use casting here.
+
+List<Account> acList = [SELECT Id, AnnualRevenue FROM Account ];
+
+for(Account ac : acList){
+    
+    AggregateResult[] aggList= [SELECT AccountId, Sum(Amount) FROM Opportunity WHERE AccountId =: ac.Id  GROUP BY AccountId ];
+    for (AggregateResult agg : aggList) {
+        Decimal sumAmmount = (Decimal) agg.get('expr0');
+        
+        ac.AnnualRevenue=sumAmmount;
+    }
+}
+update acList;
