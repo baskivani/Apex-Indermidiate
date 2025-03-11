@@ -1,0 +1,106 @@
+A method is a block of statements or a set of code grouped together to perform a specific operation. It is used to achieve the reusability of code because we write a method at once and use it many times whenever required. We can easily modify the code just by adding or removing code as per requirement. The method is executed only when we call or invoke as per need.
+
+  public static Integer wilt(Integer numberOfPetals){ //body of method }
+
+Static Void Method:
+
+public class AreaCalculations {
+
+    public static void areaRectangeA(){
+        Decimal h = 12;
+        Decimal b = 18;
+        
+        Decimal area = h * b;
+        
+    	System.debug('The area of this rectangle is: ' + area);
+        
+        
+    }
+
+}
+ClassName.MethodName();
+
+AreaCalculations.areaRectangeA();
+Non-Static Void Method:
+public class AreaCalculations {
+
+    public  void areaRectangeB(){
+        Decimal h = 9;
+        Decimal b = 6;
+        
+        Decimal area = h * b;
+        
+    	System.debug('The area of this rectangle is: ' + area);
+        
+        
+    }
+    
+}
+Create an Instance (Object):
+
+ClassName objectName = new ClassName();
+
+Class the method:
+
+ObjectName.MethodName();
+
+AreaCalculations objA = new AreaCalculations();
+objA.areaRectangeB();
+Static Non-Void Method:
+public class AreaCalculations {
+
+    public  static Decimal areaRectangeC(){
+        Decimal h = 10;
+        Decimal b = 15;
+        
+        Decimal area = h * b;
+        
+    	System.debug('The area of this rectangle is: ' + area); 
+        
+        return area;
+    
+    }
+}
+AreaCalculations.areaRectangeC();
+Non-Static Non-Void Method:
+public class AreaCalculations {
+
+    public   Decimal areaRectangeD(){
+        Decimal h = 8;
+        Decimal b = 12;
+        
+        Decimal area = h * b;
+        
+    	System.debug('The area of this rectangle is: ' + area);   
+        
+        return area;
+        
+    }
+}
+AreaCalculations objB = new AreaCalculations();
+objB.areaRectangeD();
+Static Void Method with Parameters:
+public class AreaCalculations {
+
+    public  static void areaRectangeE(Decimal h, Decimal b){
+        
+        Decimal area = h * b;
+        
+    	System.debug('The area of this rectangle is: ' + area);   
+        
+    }
+}
+AreaCalculations.areaRectangeE(12,5);
+Non-Static Void Method with Parameters:
+public class AreaCalculations {
+
+    public void areaRectangeF(Decimal h, Decimal b){
+        
+        Decimal area = h * b;
+        System.debug('The area of this rectangle is: ' + area);
+        
+    }
+}
+AreaCalculations objC = new AreaCalculations();
+objC.areaRectangeF(13,7);
+Video Part 2: https://www.youtube.com/watch?v=yNt-e1sXxbg
