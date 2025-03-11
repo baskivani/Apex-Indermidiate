@@ -1,0 +1,43 @@
+A. Apex DML Operations
+Lesson: 01 | DML Statements | Insert
+
+Insert Statement
+Create an account with the name 'New Account 1:
+
+Account newAccount = new Account(Name='New Account 1');
+insert newAccount;
+ 
+
+Create an Account with the following assignments:
+
+Name: New Account 2
+AccountNumber: 2345643
+Phone: (415) 901-7000
+Account newAccount = new Account(
+    Name='New Account 2',
+    AccountNumber='23456543',
+    Phone='(415) 901-7000');
+insert newAccount;
+You can also insert a new record using variables:
+
+String name='New Account 3';
+String acnumber='23456543';
+String phone='564 231 22 22';
+
+
+Account newAccount = new Account(Name=name, AccountNumber=acnumber, Phone=phone);
+insert newAccount;
+You can also get the ID on the sObject that corresponds to the inserted record.
+
+Account acct = new Account(Name='Acme', Phone='(415)555-1212', NumberOfEmployees=100);
+insert acct;
+ID acctID = acct.Id;
+System.debug('ID = ' + acctID);
+Inserting a new Opportunity:
+
+Opportunity newOpp = new Opportunity (
+    Name='Edge Emergency Generator',
+    StageName='Closed Won',
+    CloseDate=Date.newInstance(2022, 6, 3));
+
+insert newOpp;
