@@ -1,0 +1,20 @@
+Object-oriented programming in Apex is a programming paradigm that is supported by programming languages. This approach is based on creating objects and their interactions to solve programming problems.
+
+Apex is designed as an object-oriented programming language and therefore uses OOP concepts. In Apex, an object class is a template with properties (variables) and behaviors (methods). These classes allow application developers to create customizable and reusable code snippets.
+
+Object-oriented programming helps make code in Apex more understandable, easier to maintain, and expandable. It also provides a standard for collaboration and code sharing among application developers.
+
+Here's an example class in Apex with some methods:
+
+public class BasicMath {
+    
+    // Dikdörtgenin alanını hesaplayan method
+    public static double area(double length, double width) {
+        return length * width;
+    }
+
+    // Dikdörtgenin çevresini hesaplayan method
+    public static double perimeter(double length, double width) {
+        return 2 * (length + width);
+    }
+}
