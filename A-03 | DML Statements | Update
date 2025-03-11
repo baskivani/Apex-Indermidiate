@@ -37,3 +37,25 @@ public static void UpdateAccountNumberOfAccount(String AccountNumber){
         }
     
 }
+--------------------------------------
+Bulk Update Account Ratings
+User Story:
+As a Salesforce developer, I want to write code that updates the ratings of all existing accounts to "Hot", So that I can efficiently apply a bulk update to this attribute when needed.
+
+ public static void updateRatingOfAccount(){
+     List<Account> accList = [Select Id, Rating, Name From Account Where Rating !='Hot'];
+		List<Account> updatedList = new List<Account>();
+       	
+        	For(Account acc : accList){
+                if (acc.Rating != 'Hot' || acc.Rating ==null){
+                acc.Rating = 'Hot';
+                    updatedList.add(acc);        
+
+                }
+        }
+        if (updatedList.size() != 0){
+            update UpdatedList;
+        }   
+        
+    }
+
