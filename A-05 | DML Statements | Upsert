@@ -1,0 +1,19 @@
+Upsert: 
+
+In Apex, upsert is a DML operation that allows you to insert new records or update existing records in a single call. The term "upsert" is a combination of "update" and "insert".
+
+When you perform an upsert operation, Salesforce first tries to find a record with a matching external ID. If a record is found, it is updated with the new data. If no matching record is found, a new record is created with the specified data.
+
+Contact con1 = new Contact();   
+con1.FirstName='Josh';
+con1.LastName='Kaplan';
+con1.Department='Finance';
+insert con1;
+con1.Description = 'This contact is update after inserted.';
+
+Contact con2 = new Contact();
+con2.FirstName='Kathy';
+con2.LastName='Brown';
+con2.Department='Technology';
+List<Contact> conList = new List<Contact> {con1, con2};
+upsert conList;
