@@ -1,0 +1,40 @@
+
+This code queries for an account record with the specified ID and then deletes it
+
+Account ac = [SELECT Id FROM Account WHERE Id = '001Dn00000PszzqIAB'];
+delete ac;
+This code queries for an account record with the specified name and then deletes it. Note that if there are multiple accounts with the same name, only the first one returned by the query will be deleted.
+
+Account ac = [SELECT Id FROM Account WHERE Name = 'Bank of America' LIMIT 1];
+delete ac;
+This code queries for all account records and then deletes them. Note that this will delete all Account records in your Salesforce org, so be careful when using this code.
+
+List<Account> acList = [SELECT Id FROM Account];
+delete acList;
+This code queries for all account records that do not have any related Contact records and then deletes them.
+
+List<Account> acList = [SELECT Id FROM Account WHERE Id NOT IN (SELECT AccountId FROM Contact)];
+delete acList;
+This code queries for all Case records that have a status of "New" or "Working" and then deletes them.
+
+List<Case> casesToDelete = [SELECT Id FROM Case WHERE Status IN ('New', 'Working')];
+delete casesToDelete;
+This code queries for all Account records that were created more than 3 days ago and then limits the results to 5000 records. Finally, it deletes the records.
+
+DateTime threeDaysAgo = System.now().addDays(-3);
+List<Account> acList = [SELECT Id FROM Account WHERE CreatedDate < :threeDaysAgo LIMIT 5000];
+delete acList;
+OR
+List<Account> acList = [SELECT Id FROM Account WHERE CreatedDate >= LAST_N_DAYS:3 LIMIT 5000];
+delete acList;
+This code deletes all Account records where the website is "pathtosalesforce.com"
+
+List<Account> accountsToDelete = new List<Account>();
+
+for(Account acc: [SELECT id, name FROM Account WHERE Website = 'pathtosalesforce.com']){
+    accountsToDelete.add(acc);
+}
+
+delete accountsToDelete;
+Note: Al the accounts with the Website "delete.com" will be deleted.
+
