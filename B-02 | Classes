@@ -1,0 +1,31 @@
+Apex is an object-oriented programming language.
+
+Everything in Apex is associated with classes and objects, along with its attributes and methods.
+
+For example: in real life, a car is an object. The car has attributes, such as weight and color, and methods, such as drive and brake.
+
+One of the benefits of Apex classes is code reuse. Class methods can be called by triggers and other classes. The following tutorial walks you through saving an example class in your organization, using this class to send emails, and inspecting debug logs.
+
+Use the keyword class to create a class:
+public class MyFirstClass {
+  String firstName = 'Will Smith';
+}
+ 
+
+In Apex, you can define outer classes as well as inner classes, that is, a class defined within another class.
+
+You can only have inner classes one level deep.
+
+public class myOuterClass {
+   // Additional myOuterClass code here
+   class myInnerClass {
+     // myInnerClass code here
+   }
+}
+ To define a class, specify the following:
+
+You must use one of the access modifiers in the declaration of a top-level class.
+Optional definition modifiers (such as virtual, abstract, and so on).
+Required: The keyword class followed by the name of the class.
+Note: You do not have to use an access modifier in the declaration of an inner class and avoid using standard object names for class names.
+
