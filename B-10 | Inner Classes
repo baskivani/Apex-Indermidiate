@@ -1,0 +1,14 @@
+In Apex, you can define top-level classes (also called outer classes) as well as inner classes, that is, a class defined within another class. You can only have inner classes one level deep. 
+
+Apex Class
+ApexCode
+Consideration
+ Video
+public class myOuterClass{
+    public  class myInnerClass{
+        public void show() {
+            System.debug('Hello');
+        }
+    }
+    
+}
