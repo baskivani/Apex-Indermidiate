@@ -1,0 +1,38 @@
+You can extend a class to provide more specialized behavior. A class that extends another class inherits all the methods and properties of the extended class. The extending class can override the existing virtual methods by using the override keyword in the method definition. Overriding a virtual method allows you to provide a different implementation for an existing method. This means that the behavior of a particular method is different based on the object you’re calling it on.
+
+
+Exercises
+public virtual class Rectangle {
+    public virtual void area() {
+        System.debug('The area of a rectangle is the product of its length and width');
+    }
+}
+
+Exercise: Animal Sound Simulator
+
+public virtual class Animal {
+    public void makeSound() {
+        System.debug('Generic animal sound');
+    }
+}
+
+public class Dog extends Animal {
+    public override void makeSound() {
+        System.debug('Bark');
+    }
+}
+
+public class Cat extends Animal {
+    public override void makeSound() {
+        System.debug('Meow');
+    }
+}
+
+Animal myAnimal = new Animal();
+myAnimal.makeSound(); // Output: "Generic animal sound"
+
+Animal myDog = new Dog();
+myDog.makeSound(); // Output: "Bark"
+
+Animal myCat = new Cat();
+myCat.makeSound(); // Output: "Meow"
