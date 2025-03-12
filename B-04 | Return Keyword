@@ -1,0 +1,24 @@
+public class ApexClass {
+    public static Boolean checkAccount(String acName){
+        
+        List<Account> acList = [SELECT Id, Name FROM Account WHERE Name =: acName];
+        Boolean acFound=false;
+        if(acList.size() != 0){
+            acFound = true;
+        }
+        else{
+            acFound = false;
+            
+        }
+        return acFound;
+    }
+    public static void createAccount(String acName){
+        if(checkAccount(acName)==false){
+            insert new Account(Name=acName);
+            System.debug('An account has been created');
+        }
+        else{
+            System.debug('There is an Account with the Name '+acName);
+        }
+    }
+}
