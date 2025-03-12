@@ -1,0 +1,51 @@
+In Apex, a class variable is a variable that is declared at the class level, rather than at the method level. This means that the variable is accessible to all methods within the class, and can be used to store data that needs to be shared across multiple methods.
+
+To declare a class variable in Apex, you use the syntax:
+
+[public | private | protected] [static] [final] data_type variable_name [= value];
+public, private, or protected specifies the access level of the variable
+static specifies that the variable is a class variable (as opposed to an instance variable)
+final specifies that the variable is a constant and cannot be changed
+data_type specifies the type of data that the variable will store
+variable_name is the name of the variable
+value is an optional initial value for the variable.
+
+To declare a variable, specify the following:
+
+Optional: Modifiers, such as public or final, as well as static.
+
+Required: The data type of the variable, such as String or Boolean.
+
+Required: The name of the variable.
+
+Optional: The value of the variable.
+
+You can access class variables in a non-static method with this keyword:
+
+Example 1:
+
+public class ClassVariables {
+    
+    public Integer num1 = 12;
+    
+    public void methodA(){
+        
+        System.debug(this.num1);
+    }
+
+}
+Example 2:
+
+public class ClassVariables {
+    
+    public Integer num1 = 12;
+    public Integer num2 = 15;
+    
+    public void methodA(){
+        
+        Integer sum = this.num1 + num2;
+        System.debug(sum);
+    }
+
+}
+Expected Outcome: 27
