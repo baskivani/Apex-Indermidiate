@@ -1,0 +1,49 @@
+In Salesforce, an abstract class refers to a class that cannot be instantiated directly but serves as a blueprint for other classes. It is designed to be inherited by child classes, which can provide their own implementations for the abstract methods defined in the abstract class.
+
+Abstract classes are commonly used in Salesforce to create a common interface or behavior that multiple classes can share. They provide a way to define a set of methods that must be implemented by the child classes, ensuring consistency and enforcing certain functionality across different implementations.
+
+Abstract classes are defined using the abstract keyword in the class declaration.
+
+public abstract class MyAbstractClass {
+    // class body
+}
+Abstract classes can contain abstract methods, which are methods without an implementation. These methods are defined using the abstract keyword and end with a semicolon. Child classes must provide their own implementations for these methods. 
+
+public abstract class MyAbstractClass {
+    public abstract void myMethod();
+}
+Abstract classes can also have non-abstract methods with regular implementations. These methods can be used by both the abstract class itself and its child classes.
+
+An abstract class cannot be instantiated directly. However, you can create instances of its child classes. Child classes must extend the abstract class using the extends keyword and provide implementations for all the abstract methods.
+
+public class MyChildClass extends MyAbstractClass {
+    public override void myMethod() {
+        // method implementation
+    }
+}
+Child classes can have their own properties, methods, and additional functionality in addition to the abstract methods they inherit from the abstract class.
+
+Abstract classes can be useful in Salesforce when you want to define common behavior or requirements for a group of related classes. They provide a way to enforce certain methods that child classes must implement, ensuring consistent functionality across different implementations.
+
+Example:
+
+public abstract class Animal {
+    public abstract void makeSound();
+    
+    public void sleep() {
+        System.debug('Zzzzz...');
+    }
+}
+
+public class Dog extends Animal {
+    public override void makeSound() {
+        System.debug('Woof!');
+    }
+}
+
+public class Cat extends Animal {
+    public override void makeSound() {
+        System.debug('Meow!');
+    }
+}
+ 
