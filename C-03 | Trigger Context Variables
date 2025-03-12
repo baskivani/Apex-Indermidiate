@@ -1,0 +1,232 @@
+isExecuting:
+Returns true if the current context for the Apex code is a trigger, not a Visualforce page, a Web service, or an executeanonymous() API call.
+
+trigger myAccountTrigger on Account(before insert) {
+    for(Account acc: Trigger.New){
+        acc.Description ='Test Description';
+    }
+    
+     if(Trigger.isExecuting){
+            
+            System.debug(Trigger.New[0].Name + ' is created. ');
+     }
+     else {
+            System.debug('Trigger did not execute');
+     }
+
+}
+Account ac = new Account(Name='Blue Moon Hotel');
+insert ac;
+
+22:22:40:153 USER_DEBUG [8]|DEBUG|Blue Moon Hotel is created. 
+
+isInsert:
+Returns true if this trigger was fired due to an insert operation, from the Salesforce user interface, Apex, or the API.
+
+trigger myAccountTrigger on Account(before insert,
+                                    before update,
+                                    before delete,
+                                    after insert,
+                                    after update,
+                                    after delete,
+                                    after undelete ) {
+
+     if(Trigger.isInsert){
+            
+            System.debug(Trigger.New[0].Name + ' is created. ');
+     }                                      
+
+}
+Account ac = new Account(Name='White House');
+insert ac;
+USER_DEBUG [11]|DEBUG|White House is created. 
+
+  isUpdate:
+Returns true if this trigger was fired due to an update operation, from the Salesforce user interface, Apex, or the API.
+
+trigger myAccountTrigger on Account(before insert,
+                                    before update,
+                                    before delete,
+                                    after insert,
+                                    after update,
+                                    after delete,
+                                    after undelete )
+{
+    if(Trigger.isInsert){
+        System.debug(Trigger.New[0].Name + ' is created. ');
+    }
+    if(Trigger.isUpdate){
+        System.debug(Trigger.New[0].Name + ' has been updated. ');
+    }                                        
+                                        
+
+}
+Account ac =[SELECT Id, Name FROM Account WHERE Name='White House' LIMIt 1];
+update ac;
+22:30:20:168 USER_DEBUG [13]|DEBUG|White House has been updated. 
+
+isDelete:
+Returns true if this trigger was fired due to a delete operation, from the Salesforce user interface, Apex, or the API.
+
+trigger myAccountTrigger on Account(before insert,
+                                    before update,
+                                    before delete,
+                                    after insert,
+                                    after update,
+                                    after delete,
+                                    after undelete )
+{
+    if(Trigger.isInsert){
+        System.debug(Trigger.New[0].Name + ' is created.');
+    }
+    if(Trigger.isUpdate){
+        System.debug(Trigger.New[0].Name + ' has been updated.');
+    }  
+    if(Trigger.isDelete){
+        System.debug(Trigger.Old[0].Name + ' has been deleted.');
+    }
+                                        
+
+}
+Account ac =[SELECT Id, Name FROM Account WHERE Name='White House' LIMIT 1];
+delete ac;
+22:36:01:262 USER_DEBUG [16]|DEBUG|White House has been deleted.
+
+isBefore:
+Returns true if this trigger was fired before any record was saved.
+
+trigger myAccountTrigger on Account(before insert,
+                                    before update,
+                                    before delete,
+                                    after insert,
+                                    after update,
+                                    after delete,
+                                    after undelete )
+{
+    if(Trigger.isInsert){
+        System.debug(Trigger.New[0].Name + ' has been created.(INSERT)');
+    }
+    if(Trigger.isUpdate){
+        System.debug(Trigger.New[0].Name + ' has been updated.');
+    }  
+    if(Trigger.isDelete){
+        System.debug(Trigger.Old[0].Name + ' has been deleted.');
+    }
+    if(Trigger.isBefore){
+        System.debug(Trigger.New[0].Name + ' has been created.(BEFORE)');
+    }                                        
+
+}
+Account ac = new Account(Name='New Kingdom');
+insert ac;
+22:39:04:209 USER_DEBUG [10]|DEBUG|New Kingdom has been created.(INSERT)
+
+22:39:04:120 USER_DEBUG [19]|DEBUG|New Kingdom has been created.(BEFORE)
+
+isAfter:
+Returns true if this trigger was fired after all records were saved.
+
+trigger myAccountTrigger on Account(before insert,
+                                    before update,
+                                    before delete,
+                                    after insert,
+                                    after update,
+                                    after delete,
+                                    after undelete )
+{
+    if(Trigger.isInsert){
+        System.debug(Trigger.New[0].Name + ' has been created.(INSERT)');
+    }
+    if(Trigger.isUpdate){
+        System.debug(Trigger.New[0].Name + ' has been updated.');
+    }  
+    if(Trigger.isDelete){
+        System.debug(Trigger.Old[0].Name + ' has been deleted.');
+    }
+    if(Trigger.isBefore){
+        System.debug(Trigger.New[0].Name + ' has been created.(BEFORE)');
+    }
+    if(Trigger.isAfter){
+        System.debug(Trigger.New[0].Name + ' has been created.(AFTER)');
+    }                                        
+
+}
+Account ac = new Account(Name='AssistRX');
+insert ac;
+isUndelete:
+Returns true if this trigger was fired after a record is recovered from the Recycle Bin. This recovery can occur after an undelete operation from the Salesforce user interface, Apex, or the API.
+
+trigger myAccountTrigger on Account(before insert,
+                                    before update,
+                                    before delete,
+                                    after insert,
+                                    after update,
+                                    after delete,
+                                    after undelete )
+{
+    if(Trigger.isInsert){
+        System.debug(Trigger.New[0].Name + ' has been created.(INSERT)');
+    }
+    if(Trigger.isUpdate){
+        System.debug(Trigger.New[0].Name + ' has been updated.');
+    }  
+    if(Trigger.isDelete){
+        System.debug(Trigger.Old[0].Name + ' has been deleted.');
+    }
+    if(Trigger.isBefore){
+        System.debug(Trigger.New[0].Name + ' has been created.(BEFORE)');
+    }
+    if(Trigger.isAfter){
+        System.debug(Trigger.New[0].Name + ' has been created.(AFTER)');
+    }
+    if(Trigger.isundelete){
+        System.debug(Trigger.New[0].Name + ' has been undeleted.');
+    }                                      
+}
+List<Account> acList =[SELECT Id, Name, isdeleted 
+             FROM ACCOUNT 
+             WHERE isdeleted=true AND Name='White House' 
+             ALL ROWS];
+undelete acList;
+image
+
+newMap:
+ 
+
+ 
+
+newMap and oldMap:
+newMap: A map of IDs to the new versions of the sObject records. This map is only available in before update, after insert, after update, and after undelete triggers.
+
+oldMap: A map of IDs to the old versions of the sObject records. This map is only available in update and delete triggers.
+
+trigger AccountTrigger on Account (before update) {    
+    
+    System.debug(Trigger.oldMap.values()[0].Name + ' is updated to: ' + Trigger.newMap.values()[0].Name);
+    
+}
+Account ac = [SELECT Id, Name from Account WHERE Name ='Blue Hotel' LIMIT 1];
+ac.Name='New Blue Hotel';
+
+update ac;
+
+trigger AccountTrigger on Account (before update) {    
+
+    for(Account ac : Trigger.oldMap.values()){
+        System.debug(ac.name);
+    }
+    for(Id acId : Trigger.oldMap.keySet()){
+        System.debug(acId);
+    }    
+}
+Account ac = [SELECT Id, Name from Account WHERE Name ='White House' LIMIT 1];
+ac.Name='New Blue Hotel';
+
+update ac;
+operationType:
+
+Returns an enum of type System.TriggerOperation corresponding to the current operation.
+Possible values of the System.TriggerOperation enum are: BEFORE_INSERT, BEFORE_UPDATE, BEFORE_DELETE,AFTER_INSERT, AFTER_UPDATE, AFTER_DELETE, and AFTER_UNDELETE. If you vary your programming logic based on different trigger types, consider using the switch statement with different permutations of unique trigger execution enum states.
+
+
+
