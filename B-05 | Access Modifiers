@@ -1,0 +1,26 @@
+Apex allows you to use the private, protected, public, and global access modifiers when defining methods and variables.
+
+private:
+
+This access modifier is the default, and means that the method or variable is accessible only within the Apex class in which it’s defined. If you don’t specify an access modifier, the method or variable is private.
+
+protected:
+
+This means that the method or variable is visible to any inner classes in the defining Apex class, and to the classes that extend the defining Apex class. You can only use this access modifier for instance methods and member variables. This setting is strictly more permissive than the default (private) setting.
+
+public:
+
+This means that the method or variable is accessible by all Apex within a specific package.
+
+global:
+
+This means the method or variable can be used by any Apex code that has access to the class, not just the Apex code in the same application. This access modifier must be used for any method that must be referenced outside of the application, either in SOAP API or by other Apex code. If you declare a method or variable as global, you must also declare the class that contains it as global.
+
+The following is an example to a private variable in Apex:
+
+private Integer x = 12;
+The following is an example to a private method in Apex:
+
+public string myMethod() { 
+   ... 
+}
