@@ -1,0 +1,18 @@
+An enum is an abstract data type with values that each take on exactly one of a finite set of identifiers that you specify. Enums are typically used to define a set of possible values that don’t otherwise have a numerical order. Typical examples include the suit of a card, or a particular season of the year.
+
+To define an enum, use the enum keyword in your declaration and use curly braces to demarcate the list of possible values.
+
+For example, the following code creates an enum called Level:
+
+public enum Level{LOW, MEDIUM, HIGH}
+The enum type itself has no constructor syntax.
+public class EnumClass {
+    
+    public enum Season {WINTER, SPRING, SUMMER, FALL}
+    
+    public static void show(){
+        
+        System.debug(season.winter);
+    }
+
+}
