@@ -1,0 +1,49 @@
+Before triggers are used to update or validate record values before they’re saved to the database.
+After triggers are used to access field values that are set by the system (such as a record's Id or LastModifiedDate field), and to affect changes in other records. The records that fire the after trigger are read-only.
+
+Examples:
+
+trigger myAccountTrigger on Account(before insert) {
+    for(Account acc: Trigger.New){
+        acc.Description ='Test Description';
+    }
+
+}
+new:
+Returns a list of the new versions of the sObject records.
+This sObject list is only available in insert, update, and undelete triggers, and the records can only be modified in before triggers.
+
+Trigger.new is a list
+
+Trigger.new[0] or Trigger.new.get(0) is the first record of the Trigger.new list.
+
+trigger myAccountTrigger on Account(before insert)
+{
+   System.debug(Trigger.New[0].Name + ' is created. ');                              
+}
+Trigger.new is ussually used in for each loop:
+
+trigger myAccountTrigger on Account(before insert)
+{
+    for(Account ac : Trigger.new) {
+        System.debug(ac+' has been created. ');
+    }                             
+}
+Account ac = new Account(Name='Blue Hotel');
+insert ac;
+image
+
+old:
+Returns a list of the old versions of the sObject records.
+This sObject list is only available in update and delete triggers.
+
+trigger AccountTrigger on Account (before update) {    
+    
+    System.debug(Trigger.Old[0].Name + ' is updated to: ' + Trigger.New[0].Name);
+    
+}
+Account ac = [SELECT Id, Name from Account WHERE Name ='Blue Hotel' LIMIT 1];
+ac.Name='New Blue Hotel';
+
+update ac;
+image
