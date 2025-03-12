@@ -1,0 +1,37 @@
+n Apex, a constructor is a special method that gets called when an object of a class is instantiated (created). The purpose of a constructor is to initialize the state of the object.
+
+In other words, a constructor is used to set the initial values of the instance variables of a class when an object of that class is created.
+
+A constructor has the same name as the class it belongs to and does not have a return type.
+
+In Apex, there are two types of constructors:
+
+Default Constructor: If you do not define any constructor in a class, then Apex automatically creates a default constructor with no arguments. This constructor does not do anything except initializing the instance variables to their default values.
+
+Parameterized Constructor: A parameterized constructor is a constructor that takes one or more parameters. It allows you to initialize the instance variables of the object with the values passed as arguments to the constructor.
+
+For example, consider the following Apex class with a parameterized constructor:
+
+public class Person {
+    public String name;
+    public Integer age;
+
+    public Person(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+public class Demo {
+  Integer x;  
+
+
+  public   Demo() {
+    x = 5;  
+  }
+
+  public static void myMethod() {
+    Demo myObj = new Demo();
+    System.debug(myObj.x); 
+  }
+}
+Note that the constructor name must match the class name, and it cannot have a return type (like void). 
