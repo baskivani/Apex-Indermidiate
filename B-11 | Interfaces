@@ -1,0 +1,26 @@
+An interface is like an Apex class in which none of the methods have been implemented. It only contains the method signatures, but the body of each method is empty. To use an interface, another class must implement it by providing a body for all of the methods contained in the interface.
+
+Interfaces are used mainly for providing the abstraction layer for your code. They separate the implementation from declaration of the method.
+
+ 
+
+public interface PurchaseOrder {
+
+    Double discount();
+}
+This class implements the PurchaseOrder interface for customer purchase orders.
+
+public class CustomerPurchaseOrder implements PurchaseOrder {
+    public Double discount() {
+        return .05;
+    }
+}
+ 
+
+This class implements the PurchaseOrder interface for employee purchase orders.
+
+public class EmployeePurchaseOrder implements PurchaseOrder {
+      public Double discount() {
+        return .10;
+      } 
+}
