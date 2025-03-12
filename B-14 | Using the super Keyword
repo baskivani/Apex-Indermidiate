@@ -1,0 +1,40 @@
+The super keyword can be used by classes that are extended from virtual or abstract classes. By using super, you can override constructors and methods from the parent class.
+
+Main Class| ClassA
+Sub Class| ClassB
+
+public virtual class ClassA {
+    public String myFirstName;
+    public String myLastName;
+
+    public ClassA() {
+
+        myFirstName = 'Engin';
+        myLastName = 'Basturk';
+    }
+
+    public ClassA(String firstName, String lastName) {
+
+        myFirstName = firstName;
+        myLastName = lastName;
+    }
+
+    public virtual void printName() {
+
+        System.debug('My name is ' +  myLastName);
+    }
+
+   public virtual String getFirstName() {
+       return myFirstName;
+   }
+}
+
+-----------
+You can create ClassB that extends ClassA
+
+public class ClassB extends ClassA {
+  public override void printName() {
+        super.printName();
+        System.debug('But you can call me ' + super.getFirstName());
+    }
+}
