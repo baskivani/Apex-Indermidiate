@@ -1,0 +1,10 @@
+public class ApexClass{    
+    Integer x;
+    Integer y;       
+    public  void sum(){
+        this.x=12;
+        this.y=15;
+        Integer sum=this.x+this.y;        
+        System.debug('The sum of '+this.x+ ' and '+this.y+' is '+sum);
+    }
+}
