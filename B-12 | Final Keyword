@@ -1,0 +1,13 @@
+public class ApexClass {
+
+   public static final Integer x=19; 
+
+   static {
+       x = 12;
+   }
+    
+    public static void ApexMethod(){
+        
+        System.debug(x);
+    }
+}
