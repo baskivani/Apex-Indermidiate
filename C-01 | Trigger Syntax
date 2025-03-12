@@ -1,0 +1,22 @@
+Apex triggers enable you to perform custom actions before or after events to records in Salesforce, such as insertions, updates, or deletions. Just like database systems support triggers, Apex provides trigger support for managing records.
+
+A trigger definition starts with the trigger keyword. It is then followed by the name of the trigger, the Salesforce object that the trigger is associated with, and the conditions under which it fires. A trigger has the following syntax:
+
+trigger AcountTrigger on Account (before insert) {
+   //Write your code here...
+}
+To execute a trigger before or after insert, update, delete, and undelete operations, specify multiple trigger events in a comma-separated list. The events you can specify are:
+
+before insert
+
+before update
+
+before delete
+
+after insert
+
+after update
+
+after delete
+
+after undelete
