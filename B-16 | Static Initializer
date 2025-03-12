@@ -1,0 +1,17 @@
+If you don’t want to write your own constructor for a class, you can use an instance initialization code block to initialize instance variables. In simple situations, use an ordinary initializer. Reserve initialization code for complex situations, such as initializing a static map. A static initialization block runs only one time, regardless of how many times you access the class that contains it.
+
+Static initialization code is a block of code preceded with the keyword static.
+
+public class ApexClass {
+
+   public static final Integer x; 
+
+    static {
+       x = 12;
+   }
+    
+    public static void methodA(){
+        
+        System.debug(x);
+    }
+}
