@@ -1,0 +1,32 @@
+Batch Apex is typically stateless. Each execution of a batch Apex job is considered a discrete transaction. For example, a batch Apex job that contains 1,000 records and uses the default batch size is considered five transactions of 200 records each.
+
+ When using Database.Stateful, only instance member variables retain their values between transactions.
+
+public class BatchApexStateful  implements Database.Batchable<sObject>, Database.Stateful {
+    
+    public Integer recordsProccessed =0;
+    public Database.QueryLocator start(Database.BatchableContext BC){
+        
+        return Database.getQueryLocator('SELECT Id, Rating FROM Account');
+    }
+    
+    public void execute(Database.BatchableContext BC, List<Account> acList){
+        
+        for(Account ac : acList){
+            
+            ac.Rating='Cold';
+            
+            recordsProccessed +=1;
+        }
+        
+        update acList;
+    }
+    
+    public void finish(Database.BatchableContext BC){
+        
+        System.debug(recordsProccessed + 'Accounts has been updated');
+    }
+
+}
+UpdateContactAddresses objA = new UpdateContactAddresses();
+Database.executeBatch(objA,1);
