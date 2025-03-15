@@ -1,0 +1,6 @@
+Be aware of the following considerations for trigger context variables:
+
+trigger.new and trigger.old cannot be used in Apex DML operations.
+You can use an object to change its own field values using trigger.new, but only in before triggers. In all after triggers, trigger.new is not saved, so a runtime exception is thrown.
+trigger.old is always read-only.
+You cannot delete trigger.new.
