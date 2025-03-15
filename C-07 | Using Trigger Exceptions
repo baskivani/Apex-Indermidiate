@@ -1,0 +1,30 @@
+You sometimes need to add restrictions on certain database operations, such as preventing records from being saved when certain conditions are met.
+
+To prevent saving records in a trigger, call the addError() method on the sObject in question. The addError() method throws a fatal error inside a trigger. The error message is displayed in the user interface and is logged.
+
+Create a trigger that prevents users to delete Accounts without a type.
+trigger AccountTrigger on Account (before delete) {
+    for (Account acc: Trigger.old){
+        
+        if(acc.Type==Null){
+            
+            acc.addError('You cannot delete this account.');
+        }
+    }
+}
+Create a trigger that prevents users to delete Accounts with related opportunities
+Trigger AccountDeletion on Account (before delete) {
+
+for (Account a: [SELECT id FROM Account where id in (SELECT AccountId from opportunities) AND id in :Trigger.old]) {
+
+Trigger.oldMap.get(a.id).addError(‘Cannot delete account with related opportunities.’);
+
+}
+
+}
+trigger AccountTestName on Account (before insert) {
+    if(Trigger.new[0].Name=='America') {
+		Trigger.new[0].Name.addError('Name should not be America. Try USA.');
+	}
+
+}
