@@ -1,0 +1,134 @@
+The Apex Scheduler lets you delay execution so that you can run Apex classes at a specified time. This is ideal for daily or weekly maintenance tasks using Batch Apex. To take advantage of the scheduler, write an Apex class that implements the Schedulable interface, and then schedule it for execution on a specific schedule.
+
+Apex Class
+
+public class SchedulableExample implements  Schedulable {
+    
+    public void execute(SchedulableContext SC){
+        
+        List<Opportunity> oppList = [SELECT Id, Name, CloseDate, OwnerId
+                                     FROM Opportunity
+                                     WHERE Isclosed =False AND CloseDate < TODAY];
+        
+        List<Task> taskList = new List<Task>();
+        
+        for(Opportunity opp : oppList){
+            
+            Task tsk = new Task();
+            
+            tsk.Subject='This opp needs attention';
+            tsk.Priority='High';
+            tsk.Status='Not Started';
+            tsk.OwnerId=opp.OwnerId;  //Same Owner
+            tsk.WhatId=opp.Id;
+            
+            taskList.add(tsk);
+        }
+        
+        insert taskList;
+        
+    }
+}
+
+Apex Code
+
+
+Minutes: 36
+Hours: 8 (in 24-hour clock format)
+Day of Month: 26
+Month: 4 (April)
+Day of Week: ? (not specified)
+Year: 2023
+Schedule Time 2:
+
+The scheduled job in this example will fire on February 10, 12:30:20 AM (in 24-hour clock format) based on the specified cron expression '20 30 8 10 2 ?'.
+
+OpportunityScheduleClass reminder = new OpportunityScheduleClass();
+String sch = '20 30 8 10 2 ?';
+String jobID = System.schedule('Remind Opp Owners', sch, reminder);
+This sch expression has the following fields:
+
+Seconds: 20
+
+Minutes: 30
+
+Hours: 8 (in 24-hour clock format)
+
+Day of Month: 10
+
+Month: 2 (February)
+
+Day of Week: ? (not specified)
+
+The cron expression specifies a one-time scheduling at the specific date and time. Once the job runs at the scheduled time, it will be removed from the job queue.
+
+Schedule Time 3:
+
+You can use the following cron expression to schedule an Apex job to run every Friday at 4 PM:
+
+OpportunityScheduleClass reminder = new OpportunityScheduleClass();
+String sch = '0 0 16 ? * FRI';
+String jobID = System.schedule('Remind Opp Owners', sch, reminder);
+This cron expression has the following fields:
+
+Seconds: 0
+Minutes: 0
+Hours: 16 (in 24-hour clock format, equivalent to 4 PM)
+Day of Month: ? (not specified)
+Month: * (all months)
+Day of Week: FRI (Friday)
+Schedule Time 4:
+
+This will run the MyApexClass every day at midnight
+
+OpportunityScheduleClass reminder = new OpportunityScheduleClass();
+String sch = '0 0 0 * * ?';
+String jobID = System.schedule('Remind Opp Owners', sch, reminder);
+
+
+Test Class
+
+@isTest
+private class SchedulableExampleTest {
+
+    
+    @IsTest
+    public static void testScheduledJob() {
+        
+        List<Opportunity> oppList = new List<Opportunity>();
+        for (Integer i=0; i<10; i++) {
+            Opportunity o = new Opportunity(
+                Name = 'Opportunity ' + i,
+                CloseDate = Date.today().addDays(-7),
+                StageName = 'Prospecting'
+            );
+            oppList.add(o);
+        }
+        insert oppList;
+        
+        Set<Id> oppIds = new Set<Id>();
+        
+        for(Opportunity opp : oppList){
+            oppIds.add(opp.Id);
+        }
+
+        
+        Test.startTest();
+        
+        String jobId = System.schedule('ScheduledApexTest', '55 3 1 30 12 ? 2022',new SchedulableExample());
+
+        List<Task> lt = [SELECT Id
+            FROM Task
+            WHERE WhatId IN :oppIds];
+        System.assertEquals(0, lt.size());
+ 
+        Test.stopTest();
+
+        lt = [SELECT Id
+            FROM Task
+            WHERE WhatId IN :oppIds];
+        System.assertEquals(oppIds.size(), lt.size());
+    }
+}
+
+Mastered by 51 users.
