@@ -1,0 +1,76 @@
+Batch Apex is used to run large jobs (think thousands or millions of records!) that would exceed normal processing limits. Using Batch Apex, you can process records asynchronously in batches (hence the name, “Batch Apex”) to stay within platform limits. If you have a lot of records to process, for example, data cleansing or archiving, Batch Apex is probably your best solution.
+
+To write a Batch Apex class, your class must implement the Database.Batchable interface and include the following three methods:
+
+start
+
+Used to collect the records or objects to be passed to the interface method execute for processing. This method is called once at the beginning of a Batch Apex job and returns either a Database.QueryLocator object or an Iterable that contains the records or objects passed to the job.
+
+With the QueryLocator object, the governor limit for the total number of records retrieved by SOQL queries is bypassed and you can query up to 50 million records. However, with an Iterable, the governor limit for the total number of records retrieved by SOQL queries is still enforced.
+
+execute
+
+Performs the actual processing for each chunk or “batch” of data passed to the method. The default batch size is 200 records. Batches of records are not guaranteed to execute in the order they are received from the start method.
+
+This method takes the following:
+A reference to the Database.BatchableContext object.
+A list of sObjects, such as List<sObject>, or a list of parameterized types. If you are using a Database.QueryLocator, use the returned list.
+finish
+Used to execute post-processing operations (for example, sending an email) and is called once after all batches are processed.
+
+global class BatchApex implements Database.Batchable<sObject> {    
+    global Database.QueryLocator start(Database.BatchableContext BC){        
+        String query='SELECT Id, Name from Account';
+        return Database.getQueryLocator( query);
+    } 
+    global void execute(Database.BatchableContext BC, List<Account> acList){
+        for (Account ac:acList){            
+            ac.Website='www.pathtosalesforce.com';
+        }    
+        update acList;
+    }
+    global void finish (Database.BatchableContext BC){        
+    }
+}
+Invoking a Batch Class
+To invoke a batch class, simply instantiate it and then call Database.executeBatch with the instance:
+
+BatchApex obj = new BatchApex();
+Database.executeBatch(obj);
+You can also optionally pass a second scope parameter to specify the number of records that should be passed into the execute method for each batch. The default is 200 and you can pass maximum 2000.
+
+BatchApex obj = new BatchApex();
+Database.executeBatch(obj, 100);
+image
+
+You can also use global variables to create your Batch Apex Class:
+public class UpdateAccountFields implements Database.Batchable<sObject>{
+   public final String Query;
+   public final String Entity;
+   public final String Field;
+   public final String Value;
+    public final String space =' ';
+
+   public UpdateAccountFields(String q, String e, String f, String v){
+             Query=q; Entity=e; Field=f;Value=v;
+   }
+
+   public Database.QueryLocator start(Database.BatchableContext BC){
+      return Database.getQueryLocator(query +space + Entity + space + Field + '=' +'\''+ Value +'\'');
+   }
+
+   public void execute(Database.BatchableContext BC, 
+                       List<sObject> scope){
+           delete scope;
+   }
+
+   public void finish(Database.BatchableContext BC){
+
+   }
+
+}
+String q = 'SELECT Id FROM Contact';
+String e = 'WHERE';
+String f = 'Level__c';
+String v = 'Primary';
+Id batchInstanceId = Database.executeBatch(new UpdateAccountFields(q,e,f,v), 5);
