@@ -1,0 +1,13 @@
+public class AccountTriggerClass {
+   public static void BeforeInsert(List<Account> newList){
+       for(Account acc : newList){
+            acc.Description ='This account is for demo purpose';
+       }
+    }
+}
+
+trigger AccountTrigger on Account (before insert) {
+    
+    AccountTriggerClass.BeforeInsert(Trigger.New);
+
+}
