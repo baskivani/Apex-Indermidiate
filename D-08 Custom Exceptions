@@ -1,0 +1,49 @@
+You can’t throw built-in Apex exceptions. You can only catch them. But with custom exceptions, you can throw and catch them in your methods. Custom exceptions enable you to specify detailed error messages and have more custom error handling in your catch blocks.
+
+To create your custom exception class, extend the built-in Exception class and make sure your class name ends with the word Exception, such as “MyException” or “PurchaseException”. All exception classes extend the system-defined base class Exception, and therefore, inherits all common Exception methods.
+
+public class MyCustomException extends Exception {}
+public class myCustomException extends Exception {
+
+    public static void testA() {
+        try {
+            Integer i=0;
+            if (i < 5) throw new myCustomException('This is bad');
+            
+        } catch (myCustomException e) {  
+            
+            System.debug(e.getMessage());
+        }  
+    
+    
+    }
+}
+public class ClassA {
+    
+    
+    public static void newMethod(){
+        try {
+            Integer i=0;
+            if (i < 5) throw new myCustomException('This is bad');
+            
+        } catch (myCustomException e) {  
+            
+            System.debug(e.getMessage());
+        }  
+        
+    }
+
+}
+Here are some ways you can create your exceptions objects, which you can then throw.
+
+With no arguments: 
+
+new MyException();​
+ 
+With a single String argument that specifies the error message:
+new MyException('This is bad');
+With a single Exception argument that specifies the cause and that displays in any stack trace:
+ 
+new MyException(e);
+With both a String error message and a chained exception cause that displays in any stack trace:
+new MyException('This is bad', e);
