@@ -1,0 +1,6 @@
+try {
+    String s;
+    Boolean b = s.contains('abc'); // Causes a NullPointerException
+} catch(NullPointerException npe) {
+    System.debug('The following exception has occurred: ' + npe.getMessage());
+}
