@@ -1,0 +1,29 @@
+operationType:
+Returns an enum of type System.TriggerOperation corresponding to the current operation.
+Possible values of the System.TriggerOperation enum are:
+
+BEFORE_INSERT
+BEFORE_UPDATE
+BEFORE_DELETE
+AFTER_INSERT
+AFTER_UPDATE
+AFTER_DELETE
+AFTER_UNDELETE
+If you vary your programming logic based on different trigger types, consider using the switch statement with different permutations of unique trigger execution enum states.
+
+trigger AccountTrigger on Account( before insert, after insert, before update, after update ) {
+    switch on Trigger.operationType {
+        when BEFORE_INSERT {
+            System.debug( 'Before Insert' );
+        }
+        when AFTER_INSERT {
+            System.debug( 'After Insert' );
+        }
+        when BEFORE_UPDATE {
+            System.debug( 'Before Update' );
+        }
+        when AFTER_UPDATE {
+            System.debug( 'After Update' );
+        }
+    }
+}
