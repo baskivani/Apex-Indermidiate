@@ -1,0 +1,9 @@
+This list contains two elements, but we're attempting to access the third element from this list. It will throw an exception.
+
+try {
+    List<Integer> li = new List<Integer>{2,3,4}; 
+    Integer i2 = li[3];
+} catch(ListException le) {
+    System.debug('The following exception has occurred: ' + le.getMessage());
+}
+DEBUG|The following exception has occurred: List index out of bounds: 3
