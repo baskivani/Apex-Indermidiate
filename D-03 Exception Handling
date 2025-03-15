@@ -1,0 +1,100 @@
+The insert DML statement in the example causes a DmlException because we’re inserting a merchandise item without setting any of its required fields. This is the exception error that you see in the debug log.
+
+Account ac = new Account();
+insert ac;
+try {
+    Account ac = new Account();
+    insert ac;
+} catch(DmlException e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());
+}
+Notice that the request status in the Developer Console now reports success. This is because the code handles the exception.
+
+try {
+    Account ac = new Account();
+    insert ac;
+    // This doesn't execute since insert causes an exception
+    System.debug('Statement after insert.');
+} catch(DmlException e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());
+}
+In the new debug log entry, notice that you don’t see a debug message of Statement after insert. This is because this debug statement occurs after the exception caused by the insertion and never gets executed.
+
+try {
+    Account ac = new Account();
+    insert ac;
+} catch(DmlException e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());
+}
+// This will get executed
+System.debug('Statement after insert.');
+Alternatively, you can include additional try-catch blocks.
+
+try {
+    Account ac = new Account();
+    insert ac;
+} catch(DmlException e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());
+}
+
+try {
+    System.debug('Statement after insert.');
+    // Insert other records
+}
+catch (Exception e) {
+    // Handle this exception here
+}
+The finally block always executes regardless of what exception is thrown, and even if no exception is thrown. Let’s see it used in action. Execute the following
+
+Anonymous Error
+
+Line: 2, Column: 1
+System.DmlException: Insert failed. First exception on row 0; first error: REQUIRED_FIELD_MISSING, Required fields are missing: [Name]: [Name]
+
+
+try {
+    Account ac = new Account();
+    insert ac;
+} catch(DmlException e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());
+}
+Notice that the request status in the Developer Console now reports success. This is because the code handles the exception.
+
+try {
+    Account ac = new Account();
+    insert ac;
+    // This doesn't execute since insert causes an exception
+    System.debug('Statement after insert.');
+} catch(DmlException e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());
+}
+In the new debug log entry, notice that you don’t see a debug message of Statement after insert. This is because this debug statement occurs after the exception caused by the insertion and never gets executed.
+
+try {
+    Account ac = new Account();
+    insert ac;
+} catch(DmlException e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());
+}
+// This will get executed
+System.debug('Statement after insert.');
+Alternatively, you can include additional try-catch blocks.
+
+try {
+    Account ac = new Account();
+    insert ac;
+} catch(DmlException e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());
+}
+
+try {
+    System.debug('Statement after insert.');
+    // Insert other records
+}
+catch (Exception e) {
+    // Handle this exception here
+}
+The finally block always executes regardless of what exception is thrown, and even if no exception is thrown. Let’s see it used in action. Execute the following
+
+
+
