@@ -1,0 +1,10 @@
+Any problem with SOQL queries, such as assigning a query that returns no records or more than one record to a singleton sObject variable.
+
+Causes an SObjectException because we didn't retrieve the Description field.
+
+try {
+    Account ac= [SELECT Name FROM Account LIMIT 1];
+    String s = ac.Description ;
+} catch(SObjectException se) {
+    System.debug('The following exception has occurred: ' + se.getMessage());
+}
