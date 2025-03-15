@@ -1,0 +1,45 @@
+To use Queueable Apex, simply implement the Queueable interface.
+
+The simplicity of future methods and the power of Batch Apex  mixed together to form Queueable Apex!
+
+Queueable Apex allows you to submit jobs for asynchronous processing similar to future methods with the following additional benefits:
+
+Non-primitive types:
+
+Your Queueable class can contain member variables of non-primitive data types, such as sObjects or custom Apex types. Those objects can be accessed when the job executes.
+
+Monitoring:
+
+When you submit your job by invoking the System.enqueueJob method, the method returns the ID of the AsyncApexJob record. You can use this ID to identify your job and monitor its progress, either through the Salesforce user interface in the Apex Jobs page, or programmatically by querying your record from AsyncApexJob.
+
+Chaining jobs:
+
+You can chain one job to another job by starting a second job from a running job. Chaining jobs is useful if you need to do some sequential processing.
+
+public class AsyncExecutionExample implements Queueable {
+    public void execute(QueueableContext context) {
+        Account ac = new Account(Name='Acme');
+        insert ac;        
+    }
+}
+To add this class as a job on the queue, call this method:
+
+ID jobID = System.enqueueJob(new AsyncExecutionExample());
+To query information about your submitted job, perform a SOQL query on AsyncApexJob by filtering on the job ID that the System.enqueueJob method returns. This example uses the jobID variable that was obtained in the previous example.
+
+AsyncApexJob jobInfo = [SELECT Status,NumberOfErrors FROM AsyncApexJob WHERE Id=:jobID];
+Because queueable methods are functionally equivalent to future methods, most of the time you’ll probably want to use queueable instead of future methods.
+
+Testing Queueable Jobs
+
+@isTest
+public class AsyncExecutionExampleTest {
+    static testmethod void test1() {
+        Test.startTest();        
+        System.enqueueJob(new AsyncExecutionExample());
+        Test.stopTest();
+
+        Account ac = [SELECT Name FROM Account WHERE Name='Acme' LIMIT 1];
+        System.assertNotEquals(null, ac);
+    }
+}
