@@ -1,0 +1,27 @@
+Exceptions note errors and other events that disrupt the normal flow of code execution. throw statements are used to generate exceptions, while try, catch, and finally statements are used to gracefully recover from exceptions.
+
+When an exception occurs, code execution halts. Any DML operations that were processed before the exception are rolled back and aren’t committed to the database.
+
+When unhandled Apex exceptions occur, emails are sent that include the Apex stack trace, exception message, and the customer’s org and user ID. No other data is returned with the report. Unhandled exception emails are sent by default to the developer specified in the LastModifiedBy field on the failing class or trigger. 
+
+ 
+
+try{
+    Account ac = new Account(Name='Acme 001');
+    insert ac;
+    System.debug('The account with the ID '+ac.Id + ' is created.');
+    
+}catch(Exception e) {
+	System.debug('An unexpected error has occurred: ' + e.getMessage());
+}
+DEBUG|The account with the ID 0018b00001yG4WlAAK is created.
+
+try{
+    Account ac = new Account();
+    insert ac;
+    System.debug('The account with the ID '+ac.Id + ' is created.');
+    
+}catch(Exception e) {
+	System.debug('An unexpected error has occurred: ' + e.getMessage());
+}
+DEBUG|An unexpected error has occurred: Insert failed. First exception on row 0; first error: REQUIRED_FIELD_MISSING, Required fields are missing: [Name]: [Name]
