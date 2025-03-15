@@ -1,0 +1,13 @@
+When you save a record with an insert, update, or upsert statement, Salesforce performs the following events in order
+
+1System Validation Rules
+Apex Before Triggers
+Custom Validation Rules
+Duplicate Rules
+Apex After Triggers
+Assignment Rules
+Auto-Response Rules
+Workflow Rules
+Processes
+Escalation Rules
+Roll-Up Summary Fields
