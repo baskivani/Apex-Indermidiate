@@ -1,0 +1,26 @@
+A throw statement allows you to signal that an error has occurred. To throw an exception, use the throw statement and provide it with an exception object to provide information about the specific error.
+
+throw exceptionObject;
+At least a catch block or a finally block must be present with a try block. The following is the syntax of a try-catch block.
+
+try {
+ //code_block...
+} catch (exceptionType variableName) {
+ //code_block...
+}
+The following is the syntax of a try-finally block.
+
+try {
+ //code_block...
+} finally {
+ //code_block...
+}
+This is a skeletal example of a try-catch-finally block.
+
+try {
+    // Perform some operation that might cause an exception.
+} catch(Exception e) {
+    // Generic exception handling code here.
+} finally {
+    // Perform some clean up.
+}
