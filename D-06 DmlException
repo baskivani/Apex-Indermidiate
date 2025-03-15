@@ -1,0 +1,9 @@
+The account ac is an account whose required fields are not assigned. When you try to insert any record without it's required fields, it will throw an exception.
+
+try {
+    Account ac = new Account();
+    insert ac;
+} catch(DmlException e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());
+}
+DEBUG|The following exception has occurred: Insert failed. First exception on row 0; first error: REQUIRED_FIELD_MISSING, Required fields are missing: [Name]: [Name]
