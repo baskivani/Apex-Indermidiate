@@ -1,0 +1,30 @@
+Any problem with SOQL queries, such as assigning a query that returns no records or more than one record to a singleton sObject variable.
+
+This statement doesn't cause an exception, even though we don't have a Account with name='XYZ'.
+The list lm will just be empty.
+
+try {
+    List<Account> lm = [SELECT Name FROM Account WHERE Name = 'XYZ'];
+
+} catch(QueryException qe) {
+    System.debug('The following exception has occurred: ' + qe.getMessage());    
+}
+However, this statement causes a QueryException because we're assigning the return value to a Account object but no Account is returned.
+
+try {
+    Account m = [SELECT Name FROM Account WHERE Name = 'XYZ' LIMIT 1];
+
+} catch(QueryException qe) {
+    System.debug('The following exception has occurred: ' + qe.getMessage());    
+}
+DEBUG|The following exception has occurred: List has no rows for assignment to SObject
+
+The following statement also will cause exception when there are more Accounts with the name XYZ
+
+try {
+    Account m = [SELECT Name FROM Account WHERE Name = 'XYZ'];
+
+} catch(QueryException qe) {
+    System.debug('The following exception has occurred: ' + qe.getMessage());    
+}
+DEBUG|DEBUG|The following exception has occured: List has more than 1 row for assignment to SObject
