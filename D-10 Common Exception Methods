@@ -1,0 +1,83 @@
+getCause:
+
+Returns the cause of the exception as an exception object.
+
+
+getLineNumber:
+
+Returns the line number from where the exception was thrown.
+
+
+getMessage:
+
+Returns the error message that displays for the user.
+
+
+getStackTraceString:
+
+Returns the stack trace of a thrown exception as a string.
+
+
+getTypeName:
+
+Returns the type of exception, such as DmlException, ListException, MathException, and so on.
+
+Causes an SObjectException because we didn't retrieve the Account's site field.
+
+try {
+    Account ac = [SELECT Name FROM Account LIMIT 1];
+    String newsite =ac.Site;
+} catch(Exception e) {
+    System.debug('Exception type caught: ' + e.getTypeName());    
+    System.debug('Message: ' + e.getMessage());    
+    System.debug('Cause: ' + e.getCause());    // returns null
+    System.debug('Line number: ' + e.getLineNumber());    
+    System.debug('Stack trace: ' + e.getStackTraceString());    
+}
+image
+
+getDmlFieldNames(Index of the failed record):
+
+Returns the names of the fields that caused the error for the specified failed record.
+
+
+getDmlId(Index of the failed record):
+
+Returns the ID of the failed record that caused the error for the specified failed record.
+
+
+getDmlMessage(Index of the failed record):
+
+Returns the error message for the specified failed record.
+
+
+getNumDml:
+
+Returns the number of failed records.
+
+Merchandise__c m1 = new Merchandise__c(
+    Name='Coffeemaker',
+    Description__c='Kitchenware',
+    Price__c=25,
+    Total_Inventory__c=1000);
+// Missing the Price and Total_Inventory fields
+Merchandise__c m2 = new Merchandise__c(
+    Name='Coffeemaker B',
+    Description__c='Kitchenware');
+// Missing all required fields
+Merchandise__c m3 = new Merchandise__c();
+Merchandise__c[] mList = new List<Merchandise__c>();
+mList.add(m1);
+mList.add(m2);
+mList.add(m3);
+
+try {
+    insert mList;
+} catch (DmlException de) {
+    Integer numErrors = de.getNumDml();
+    System.debug('getNumDml=' + numErrors);
+    for(Integer i=0;i<numErrors;i++) {
+        System.debug('getDmlFieldNames=' + de.getDmlFieldNames(i));
+        System.debug('getDmlMessage=' + de.getDmlMessage(i));  
+    }
+}
