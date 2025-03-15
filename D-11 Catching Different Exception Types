@@ -1,0 +1,37 @@
+try {
+    Account ac = [SELECT Name FROM Account LIMIT 1];
+    String Site2 = ac.Site;
+} catch(Exception e) {
+    System.debug('The following exception has occurred: ' + e.getMessage());    
+}
+You can have several catch blocks—a catch block for each exception type, and a final catch block that catches the generic Exception type.
+
+try {
+    Account m = [SELECT Name FROM Account LIMIT 1];
+    String Site2 = m.Site;
+} catch(DmlException e) {
+    System.debug('DmlException caught: ' + e.getMessage());    
+} catch(SObjectException e) {
+    System.debug('SObjectException caught: ' + e.getMessage());    
+} catch(Exception e) {
+    System.debug('Exception caught: ' + e.getMessage());    
+}
+DEBUG|SObjectException caught: SObject row was retrieved via SOQL without querying the requested field: Account.Site
+
+Remember that only one catch block gets executed and the remaining ones are bypassed.
+
+More Examples:
+
+Causes a NullPointerException
+
+try {
+    String s;
+    Boolean b = s.contains('abc');
+} catch(DmlException e) {
+    System.debug('DmlException caught: ' + e.getMessage());    
+} catch(SObjectException e) {
+    System.debug('SObjectException caught: ' + e.getMessage());    
+} catch(Exception e) {
+    System.debug('Exception caught: ' + e.getMessage());    
+}
+DEBUG|Exception caught: Attempt to de-reference a null object
