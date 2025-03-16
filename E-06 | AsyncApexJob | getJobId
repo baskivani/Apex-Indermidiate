@@ -1,0 +1,47 @@
+AsyncApexJob is an object in Salesforce that represents an asynchronous Apex job. Asynchronous Apex refers to Apex code that is designed to be run asynchronously, meaning that it is executed separately from the main flow of the application and does not block the user interface or other processes while it is running.
+
+AsyncApexJob records are created when an Apex job is scheduled or submitted for execution, and they are used to track the status and progress of the job. The AsyncApexJob object has fields that contain information about the job, such as its ID, status, number of completed batches, and any error messages that may have occurred during execution.
+
+public class BatchApex implements
+    Database.Batchable<sObject> {
+    
+        public Database.QueryLocator start(Database.BatchableContext bc) {
+        return Database.getQueryLocator(
+            'SELECT Id, Website FROM Account WHERE Website = Null'
+        );
+    }
+    public void execute(Database.BatchableContext bc, List<Account> acList){
+        
+        for(Account ac : acList){
+            ac.Website='pathtosalesforce.com';
+        }
+        
+        update acList;
+        
+    }
+    public void finish(Database.BatchableContext bc){
+       
+        AsyncApexJob batchJob = [SELECT Id, Status, NumberofErrors, JobItemsProcessed, TotalJobItems, Createdby.Email 
+                                 FROM AsyncApexJob
+                                WHERE Id =: bc.getJobId() ];
+        
+        System.debug(batchJob);
+        
+        
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        
+        message.setToAddresses(new String[] {batchJob.Createdby.Email});
+        message.setSubject('Batch Apex Status');
+        message.setPlainTextBody('Job Id : ' +batchJob.Id + ' Status: ' +  batchJob.Status);
+        
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[] {message});
+        
+        Error_Log__c  errorlog = new Error_Log__c();
+        errorlog.status__c = batchJob.Status;
+        errorlog.Number_of_errors__c=batchJob.NumberOfErrors;
+        errorLog.Submitter_Email__c= batchJob.Createdby.Email;
+        
+        insert errorlog;
+      
+    }
+}
