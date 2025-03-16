@@ -1,0 +1,80 @@
+Apex Class
+
+public class AccountUtility {
+
+    public static void create100Accounts(){
+        List<Account> acList = new List<Account>();
+        for(Integer i=1; i<=100; i++){
+            acList.add(new Account(Name='New Account '+i));
+        }
+    }
+    
+    public static void deleteAllAccounts(){
+        
+        List<Account> acList = [SELECT Id FROM Account];
+        
+        delete acList;
+    }
+    
+    public static void updateAllAccountRatingtoHot(){
+        List<Account> acList = [SELECT Id, Rating FROM Account];
+        
+        for(Account ac : acList){
+            ac.Rating='Hot';
+        }
+        
+        update acList;
+        
+    }
+  
+    
+}
+
+
+Apex Test Class
+
+@IsTest
+public class AccountUtilityTest {
+    
+    @IsTest
+    static void testdeleteAllAccounts(){
+        
+        test.startTest();
+        
+        AccountUtility.create100Accounts();
+        
+        AccountUtility.deleteAllAccounts();
+        
+        List<Account> acList =[SELECT Id FROM Account];
+        
+        System.assertEquals(0, acList.size());  
+              
+        
+        test.stopTest();
+    }
+    
+    @IsTest
+    static void testupdateAllAccountRatingtoHot(){
+        
+        test.startTest();
+        
+        Account ac1 = new Account(Name='Test Account', Rating ='Cold');
+        Account ac2 = new Account(Name='Test Account', Rating ='Cold');
+        Account ac3 = new Account(Name='Test Account', Rating ='Cold');
+        Account ac4 = new Account(Name='Test Account', Rating ='Cold');
+        
+        insert ac1;
+        insert ac2;
+        insert ac3;
+        insert ac4;
+        
+        AccountUtility.updateAllAccountRatingtoHot();
+        
+        List<Account> acList = [SELECT Id, Rating FROM Account WHERE Rating='Hot'];
+        
+        System.assertEquals(4, acList.size());
+        
+        test.stopTest();
+    }
+
+}
