@@ -1,0 +1,36 @@
+Apex Class
+
+public static void create100Accounts() {
+    List<Account> accountsToCreate = new List<Account>();
+    for (Integer i = 1; i <= 100; i++) {
+        Account acc = new Account(Name='Account ' + i);
+        accountsToCreate.add(acc);
+    }
+    insert accountsToCreate;
+}
+
+Apex Test Class
+
+@isTest
+private class TestCreate100Accounts {
+    
+    @isTest
+    static void testCreate100Accounts() {
+        Test.startTest();
+        
+        MyClass.create100Accounts();
+        
+        List<Account> accounts = [SELECT Id, Name FROM Account];
+        
+        System.assertEquals(100, accounts.size(), '100 accounts were not created');
+        
+        for (Integer i = 1; i <= 100; i++) {
+            String expectedName = 'Account ' + i;
+            String actualName = accounts[i-1].Name;
+            System.assertEquals(expectedName, actualName, 'Account name is incorrect');
+        }
+        
+        Test.stopTest();
+    }
+    
+}
