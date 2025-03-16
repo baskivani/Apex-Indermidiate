@@ -1,0 +1,11 @@
+You can specify the order in which search results are returned from a SOSL query using the ORDER BY clause. You can also use the clause to display empty records at the beginning or end of the results.
+
+Use one or more ORDER BY clauses in a SOSL statement. 
+
+FIND {Hotel} IN ALL FIELDS RETURNING Account(Name ORDER BY Name ASC )
+FIND {MyContactName} RETURNING Contact(Name, Id ORDER BY Name), Account(Description, Id ORDER BY Description)
+This search returns account records in descending alphabetical order by name, with accounts that have null names appearing last.
+
+Nulls First
+Nulls Last
+FIND {Bank} IN NAME FIELDS RETURNING Account(Name, Id ORDER BY Name DESC NULLS last)
