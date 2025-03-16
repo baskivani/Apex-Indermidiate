@@ -1,0 +1,6 @@
+SOSL query that searches for  contacts that have any fields with the word 'Andy'
+
+String textforSearch = 'Josey Gama';
+List<List<sObject>> searchList = [FIND :textforSearch IN ALL FIELDS
+                    RETURNING Account(Name)];
+System.debug(searchList);
