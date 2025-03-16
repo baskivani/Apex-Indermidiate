@@ -1,0 +1,67 @@
+Apex Trigger
+trigger AccountTrigger on Account (before update) {
+    AccountTriggerHandler.updateAccount(trigger.new);
+}
+
+
+Apex Class
+
+public class AccountTriggerHandler {    
+    
+    public static void updateAccount(List<Account> acList){
+        
+        for(Account ac : acList){
+            
+            ac.Rating='Hot';
+            ac.Active__c='Yes';
+        }
+    }
+    
+}
+
+
+Apex Test Class
+
+@IsTest
+public class AccountTriggerHandlerTest {
+    
+    @Istest
+    public static void testupdateAccountonInsert(){
+        
+        test.startTest();
+        Account ac1 = new Account(Name='Test Account', Rating='Cold');
+        
+        insert ac1;
+        
+        List<Account> acList =[SELECT Id, Rating FROM Account WHERE Rating = 'Hot'];
+        
+        System.assertEquals(1, acList.size());
+        test.stopTest();
+        
+    }
+    
+    @Istest
+    public static void testupdateAccountonUpdate(){
+        
+        test.startTest();
+        
+        Account ac = new Account(Name='Test Account', Rating='Cold');
+        
+        insert ac;
+        
+        ac.Name ='Test Account Updated';
+        
+        update ac;
+        
+        
+        List<Account> acList =[SELECT Id, Rating FROM Account WHERE Rating = 'Hot'];
+        
+        System.assertEquals(1, acList.size());
+        
+        test.stopTest();
+        
+    }
+
+}
+
+ 
