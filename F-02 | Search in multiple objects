@@ -1,0 +1,10 @@
+SOSL query that searches for  contacts and Accounts that have some fields with the word 'Andy'
+
+FIND 'Blue Hotel' IN ALL FIELDS RETURNING Account(Name), Contact(FirstName,LastName)
+SOSL Query in Usage:
+
+List<List<SObject>> searchList = [FIND 'Blue Hotel' 
+                                  IN ALL FIELDS 
+                                  RETURNING Account(Name), Contact(FirstName,LastName)];
+System.debug(searchList);
+
