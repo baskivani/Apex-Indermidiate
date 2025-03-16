@@ -1,0 +1,3 @@
+The following SOSL statement returns search results with the search term Blue highlighted.
+
+FIND {Blue} IN ALL FIELDS RETURNING Account(Name,Description) WITH HIGHLIGHT
