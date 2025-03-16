@@ -1,0 +1,9 @@
+SOSL query that searches for contacts that have any fields with the word 'Andy'. Searching in the fields LastName , FirstName and Email
+
+FIND {Andy} IN ALL FIELDS RETURNING Contact(FirstName, LastName, Email)
+SOSL Query in usage:
+
+List<List<SObject>> searchList = [FIND 'Andy' IN ALL FIELDS
+                                  RETURNING Contact(FirstName, LastName, Email)];
+
+System.debug(searchList);
