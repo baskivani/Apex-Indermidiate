@@ -1,0 +1,5 @@
+The following SOSL statement disables spell correction on a search of accounts for the term San Francisco.
+
+ 
+
+FIND {San Francisco} IN ALL FIELDS RETURNING Account WITH SPELL_CORRECTION = false
