@@ -1,0 +1,3 @@
+The following SOSL statement searches through the New This Week list view for the Account object for Acme.
+
+FIND {Acme} IN ALL FIELDS RETURNING Account(Id, Name USING ListView=NewThisWeek)
