@@ -1,0 +1,11 @@
+SOSL query that searches for  Accounts that have any fields with the word 'Acme'
+
+Use for loop:
+
+String textforSearch = 'Acme';
+List<List<sObject>> searchList = [FIND :textforSearch IN ALL FIELDS
+                    RETURNING Account(Name)];
+Account[] searchAccounts = (Account[])searchList[0];
+System.debug('Found the following accounts.');
+for (Account a : searchAccounts) {
+    System.debug(a.Name);
