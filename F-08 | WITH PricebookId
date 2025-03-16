@@ -1,0 +1,3 @@
+Only applicable for the Product2 object. The price book ID must be associated with the product that you’re searching for.
+
+Find {laptop} RETURNING Product2 WITH PricebookId = '01sxx0000002MffAAE'
