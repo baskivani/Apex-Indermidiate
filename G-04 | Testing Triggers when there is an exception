@@ -1,0 +1,51 @@
+Apex Class
+
+trigger PreventAccountDeletionTrigger on Account (before delete) {
+    
+    for (Account acc : Trigger.old) {
+        if (acc.Active__c == 'Yes') {
+            acc.addError('Cannot delete an active account.');
+        }
+    }
+    
+}
+
+Test Class
+
+@isTest
+public class PreventAccountDeletionTriggerTest {
+    
+    @testSetup static void setupTestData() {
+        List<Account> accounts = new List<Account>();
+        accounts.add(new Account(Name='Test Account 1', Active__c='No'));
+        accounts.add(new Account(Name='Test Account 2', Active__c='Yes'));
+        accounts.add(new Account(Name='Test Account 3', Active__c='No'));
+        insert accounts;
+    }
+    
+    @isTest static void testActiveAccountDeletion() {
+        Test.startTest();
+        
+        List<Account> accountsToDelete = [SELECT Id FROM Account WHERE Name = 'Test Account 2'];
+        try {
+            delete accountsToDelete;
+            System.assert(false, 'Active account should not have been deleted.');
+        } catch (DmlException e) {
+            System.assert(e.getMessage().contains('Cannot delete an active account.'), 'Error message not displayed correctly.');
+        }
+        
+        Test.stopTest();
+    }
+    
+    @isTest static void testInactiveAccountDeletion() {
+        Test.startTest();
+        
+        List<Account> accountsToDelete = [SELECT Id FROM Account WHERE Name = 'Test Account 1' OR Name = 'Test Account 3'];
+        delete accountsToDelete;
+        
+        Test.stopTest();
+    }
+}
+
+ 
+
