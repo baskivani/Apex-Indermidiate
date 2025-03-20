@@ -1,0 +1,38 @@
+All the test methods are static.
+
+startTest():
+Marks the point in your test code when your test actually begins. Use this method when you are testing governor limits.
+
+stopTest():
+Marks the point in your test code when your test ends. Use this method in conjunction with the startTest method.
+
+@isTest
+private class MyTestClass {
+  @isTest
+  static void myTest() {
+    // Create test data
+    Account acc = new Account(Name='Test Account');
+    insert acc;
+    
+    // Mark the start of the test block
+    Test.startTest();
+    
+    // Call asynchronous code that needs to be tested
+    List<Contact> contacts = new List<Contact>();
+    contacts.add(new Contact(FirstName='John', LastName='Doe', AccountId=acc.Id));
+    Database.SaveResult[] results = Database.insert(contacts, false);
+    
+    // Verify that the asynchronous code has completed
+    System.assertEquals('Success', results[0].getStatus());
+    
+    // Mark the end of the test block
+    Test.stopTest();
+  }
+}
+loadData(sObjectToken, resourceName):
+Inserts test records from the specified static resource .csv file and for the specified sObject type, and returns a list of the inserted sObjects.
+
+@isTest
+private class MyTestClass {
+  @isTest
+  static void myTest() {
