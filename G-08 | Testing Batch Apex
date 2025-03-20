@@ -1,0 +1,58 @@
+Apex Class
+
+public class UpdateContactAddresses implements
+    Database.Batchable<sObject>, Database.Stateful {
+    public Database.QueryLocator start(Database.BatchableContext BC) {
+        return Database.getQueryLocator(
+            'SELECT ID, BillingStreet, BillingCity, BillingState, ' +
+            'BillingPostalCode, (SELECT ID, MailingStreet, MailingCity, ' +
+            'MailingState, MailingPostalCode FROM Contacts) FROM Account '  +
+            'Where BillingCountry = \'USA\'');
+    }
+    public void execute(Database.BatchableContext BC, List<Account> acList){
+        List<Contact> contacts = new List<Contact>();
+        for (Account ac : acList) {
+            for (Contact con : ac.contacts) {
+                con.MailingStreet = ac.BillingStreet;
+                con.MailingCity = ac.BillingCity;
+                con.MailingState = ac.BillingState;
+                con.MailingPostalCode = ac.BillingPostalCode;
+                contacts.add(con);
+            }
+        }
+        update contacts;
+    }
+    public void finish(Database.BatchableContext BC){
+--------------------------------------------------------- 
+Apex Test Class
+@isTest
+private class UpdateContactAddressesTest {
+    @testSetup
+    static void setup() {
+        List<Account> acList = new List<Account>();
+        List<Contact> conList = new List<Contact>();
+
+        for (Integer i=0;i<10;i++) {
+            acList.add(new Account(name='Account '+i,
+                billingcity='New York', billingcountry='USA'));
+        }
+        insert acList;
+
+        for (Account ac : [select id from account]) {
+            conList.add(new Contact(firstname='first',
+                lastname='last', accountId=ac.id));
+        }
+        insert conList;
+    }
+    @isTest static void test() {
+        Test.startTest();
+        UpdateContactAddresses objA = new UpdateContactAddresses();
+        Database.executeBatch(objA);
+        Test.stopTest();
+  
+        System.assertEquals(10, [select count() from contact where MailingCity = 'New York']);
+    }
+}
+
+
+
