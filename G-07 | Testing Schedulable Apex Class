@@ -1,0 +1,42 @@
+Apex Class
+public class UpdateCasesToNew implements Schedulable {
+
+    public void execute(SchedulableContext context) {
+        List<Case> casesToUpdate = [SELECT Id, Status FROM Case WHERE Status != 'New'];
+        for (Case c : casesToUpdate) {
+            c.Status = 'New';
+        }
+        update casesToUpdate;
+    }
+
+}
+
+Test Class
+@IsTest
+public class UpdateCasesToNewTest {
+
+    @IsTest
+    static void testUpdateCasesToNew() {
+
+        List<Case> testCases = new List<Case>();
+        testCases.add(new Case(Subject = 'Test Case 1', Status = 'New'));
+        testCases.add(new Case(Subject = 'Test Case 2', Status = 'In Progress'));
+        testCases.add(new Case(Subject = 'Test Case 3', Status = 'Closed'));
+        testCases.add(new Case(Subject = 'Test Case 4', Status = 'Escalated'));
+        insert testCases;
+
+
+        Test.startTest();
+        String cronString = '0 0 0 * * ?'; 
+        UpdateCasesToNew job = new UpdateCasesToNew();
+        System.schedule('Update Cases to New', cronString, job);
+        Test.stopTest();
+
+
+        List<Case> updatedCases = [SELECT Id, Status FROM Case];
+        for (Case c : updatedCases) {
+            System.assertEquals('New', c.Status, 'Expected all cases to be updated to New status');
+        }
+    }
+    
+}
