@@ -1,0 +1,9 @@
+    public static void createACampaign(){
+        
+        Campaign camp = new Campaign();
+        camp.Name='New Campaign';
+        insert camp;
+        system.debug(camp);
+        system.debug ('A new case has been inserted.');
+        
+    }
