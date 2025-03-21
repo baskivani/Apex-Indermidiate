@@ -1,0 +1,6 @@
+Group grp = new Group();
+grp.name='Business Man';
+
+insert grp;
+
+
