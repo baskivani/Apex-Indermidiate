@@ -1,0 +1,12 @@
+  public static void createACase(){
+        
+        Case cs = new Case();
+      	cs.Status = 'New';
+        cs.Origin = 'Phone';
+        
+       insert cs;
+       system.debug(cs);
+       system.debug ('A new case has been inserted.');
+
+    }
+
