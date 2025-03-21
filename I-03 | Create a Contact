@@ -1,0 +1,9 @@
+    public static void createAContact(){
+        
+        Contact con = new Contact(LastName ='Test Contact 21/03/2025');
+        
+       insert con;
+       system.debug(con);
+       system.debug ('A new contact has been inserted.');
+
+    }
