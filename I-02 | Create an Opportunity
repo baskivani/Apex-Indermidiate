@@ -1,0 +1,11 @@
+public static void createAnOpportunity(){
+        
+        Opportunity op = new Opportunity(Name ='Test Opportunity 21/03/2025', 
+                                         CloseDate =Date.today(),StageName ='Prospecting', Type ='New Customer' );
+    // Opportunity üzerinde Type eklenmesi için Trigger var. O yüzden Type'ı da girmek zorunda kaldık.
+        
+       insert op;
+       system.debug(op);
+       system.debug ('A new opportunity has been inserted.');
+
+    }
