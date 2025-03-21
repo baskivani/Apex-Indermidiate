@@ -1,0 +1,11 @@
+  public static void createALead(){
+        
+        Lead lead = new Lead(LastName ='Test Lead 21/03/2025');
+      	lead.Status = 'Open - Not Contacted';
+        lead.Company = 'Baran Limited Company';
+            
+       insert lead;
+       system.debug(lead);
+       system.debug ('A new lead has been inserted.');
+
+    }
