@@ -1,0 +1,21 @@
+User Story :
+Create a method which checks whether a user exists.
+
+Hint: You need username as a parameter.
+
+public static string findUser(String username){
+    List<User> userList = [SELECT id, Username FROM User];
+        
+        String message='';
+        for(User u : userList){
+            if(u.username==username){
+               message='User Found';
+               break;
+            }
+            else {
+                message='User Not Found';
+            }
+        }
+     return message;
+}
+
