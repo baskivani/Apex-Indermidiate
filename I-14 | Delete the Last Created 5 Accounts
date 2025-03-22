@@ -1,0 +1,6 @@
+    public static void deleteLast5Account(){
+        
+        List<Account> deletedAccList = [Select Id From Account Order By CreatedDate Desc Limit 5 ];
+Database.delete (deletedAccList,false);
+        
+    }
