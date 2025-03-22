@@ -1,0 +1,17 @@
+User Story
+
+As a user of the Salesforce platform, I want to ensure that the Other Address fields of my contacts are always in sync with their Mailing Address fields so that I can have accurate and up-to-date information about their location.
+
+public class StringUtility {
+    public void assignment() {
+        List<Contact> conList = [SELECT Id, MailingStreet, MailingCity, MailingState, MailingPostalCode, OtherStreet, OtherCity, OtherState, OtherPostalCode, OtherCountry FROM Contact WHERE Mailing_Address_Is_Same_As_Other_Address__c=true];
+        for (Contact i : conList) {
+            i.OtherCity = i.MailingCity;
+            i.OtherCountry = i.MailingCountry;
+            i.OtherState = i.MailingState;
+            i.OtherStreet = i.MailingStreet;
+            i.OtherPostalCode = i.MailingPostalCode;
+        }
+        update conList;
+    }
+}
