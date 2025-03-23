@@ -1,0 +1,28 @@
+As a Salesforce administrator, I want to create a method to clear all the data in my Salesforce org, so that I can prepare the org for testing or data migration purposes.
+
+Acceptance Criteria:
+
+The method should be named clearORG.
+The method should delete all the Entitlement, Case, Opportunity, Contact, and Account records in the org.
+The method should be a public static void method, which means it should not return anything.
+
+public static void clearORG(){
+        
+        List<Entitlement> enList =[SELECT id FROM Entitlement];
+        
+        delete enList;
+        
+        List<Case> cList = [SELECT id FROM Case];
+        delete cList;
+        
+        List<Opportunity> oppList = [SELECT id FROM Opportunity];
+        delete oppList;
+        
+        List<Contact> conList = [SELECT id FROM Contact];
+        delete conList;
+        
+        List<Account> acList = [SELECT id FROM Account];
+        delete acList;
+    }
+
+
