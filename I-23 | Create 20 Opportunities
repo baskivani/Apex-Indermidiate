@@ -1,0 +1,14 @@
+As a Salesforce sales manager, I need to create 20 new Opportunity records in Salesforce for a recent campaign so that my team can begin tracking potential sales.
+
+List<Opportunity> oppList =new List<Opportunity>();
+
+for(Integer i=1; i<=20; i++){
+    Opportunity opp = new Opportunity();
+    
+    opp.Name='New Opp '+i;
+    opp.StageName='Closed Lost';
+    opp.CloseDate=System.today();
+    oppList.add(opp);
+}
+insert oppList;
+
