@@ -1,0 +1,20 @@
+As a user, I want to be able to create multiple new accounts in one go with pre-defined values for the name, billing country, and billing state.
+
+When I initiate the createNewAccount function, the system should create 50 new account records with the name "Test Account", billing country set to "America", and billing state set to "New York". The system should then insert these newly created account records into the database.
+
+This functionality will save me time and effort as I won't have to create each account individually and manually enter the same information repeatedly.
+
+
+public static void createNewAccount(){
+        List<Account>myList= new List<Account>();
+        for(Integer i=1; i<=50; i++){
+            Account ac= new Account();
+            ac.Name= 'Test Account';
+            ac.BillingCountry= 'America';
+            ac.BillingState= 'New York';
+            myList.add(ac);
+        }
+        insert myList;
+}
+
+
