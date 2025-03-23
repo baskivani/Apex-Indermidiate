@@ -1,0 +1,6 @@
+As a Salesforce administrator, I want to be able to delete the 50 most recently created Contact records using Apex code so that I can keep my org clean and organized.
+
+List<Contact> contactsToDelete = [SELECT Id FROM Contact ORDER BY CreatedDate DESC LIMIT 50];
+
+delete contactsToDelete;
+
