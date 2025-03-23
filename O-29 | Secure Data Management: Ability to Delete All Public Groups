@@ -1,0 +1,12 @@
+As a system administrator, I want to be able to delete all public groups in the org, so that I can ensure that the organization's data is secure and follows the correct access control policies.
+List<Group> publicGroups = [SELECT Id FROM Group WHERE Type = 'Regular' AND RelatedId = null];
+
+if(!publicGroups.isEmpty()) {
+    delete publicGroups;
+    System.debug('All public groups have been deleted.');
+} else {
+    System.debug('No public groups found to delete.');
+}
+
+
+
