@@ -1,0 +1,15 @@
+User Story:
+As a system administrator for our Salesforce organization,
+
+I want to automate the process of changing the owner of all newly created (today) Accounts to a specific User named John Smith.
+public static void changeuser(){
+        List<Account> myList = [SELECT Id, OwnerId From Account WHERE CreatedDate= TODAY];
+        User u= [SELECT Id FROM USER WHERE FirstName= 'John' AND LastName='Smith' LIMIT 1];
+        for(Account ac: myList){
+            ac.OwnerId= u.Id;
+        }
+        update myList;
+}
+
+
+
