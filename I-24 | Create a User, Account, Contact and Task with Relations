@@ -1,0 +1,63 @@
+As a Salesforce administrator, I need to create a new user account for Will Smith with an 'Identity User' profile, and associate the user with a new Account and Contact record, as well as create a new Task for the user.
+
+Create a user with all required fields. 
+
+Profile: Identity User
+
+Create an Account with the name Will Smith
+
+Name : Blue Moon Hotel
+
+Create a Contact with the following fields
+
+First Name : Will
+
+Last Name : Smith
+
+Create a Task with the following fields
+
+Subject : New Task Has been Added
+
+Status : In Progress
+
+Priority : High
+
+Due Date : 15 days from now
+
+It must be related to the Account and Contact you have create above.
+
+It must be assigned to the user you created above.
+
+Profile profileId = [SELECT Id FROM Profile WHERE Name = 'Identity User' LIMIT 1];
+
+User newUser = new User ();
+
+newUser.FirstName='Will';
+newUser.LastName='Smith';
+newUser.Alias='wills';
+newUser.Email='willsmith99@vmail.com';
+newUser.username='willsmith9999@vmail.com';
+newUser.TimeZoneSidKey='America/Lima';
+newUser.LocaleSidKey='en_US';
+newUser.EmailEncodingKey='UTF-8';
+newUser.LanguageLocaleKey='en_US';
+newUser.ProfileId=profileId.id;
+insert newUser;
+
+Account ac = new Account(Name='Blue Moon Hote');
+insert ac;
+
+Contact con = new Contact(FirstName ='Will', LastName='Smith', AccountId=ac.id);
+insert con; 
+
+Task tsk = new Task();
+tsk.subject='New Task Has been Added';
+tsk.priority='High';
+tsk.status='In Progress';
+tsk.OwnerId=newUser.id;
+tsk.whatId=ac.id;
+tsk.whoid=con.id;
+tsk.ActivityDate=System.today()+15;
+
+insert tsk;
+
