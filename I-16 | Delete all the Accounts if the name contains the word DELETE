@@ -1,0 +1,7 @@
+User Story:
+Create a code which deletes all the Account if name contains the word delete in it.
+
+For Example: Delete this Account, This Account needs to be deleted.
+
+List<Account> acList =[SELECT Id FROM Account WHERE Name LIKE '%delete%'];
+delete acList;
