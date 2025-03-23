@@ -1,0 +1,12 @@
+    public static void assignPermissionSet(){
+        
+        User u = [SELECT Id, Username FROM User WHERE Username='admin@pathtosalesforce.com'];
+        PermissionSet ps =[SELECT Id FROM PermissionSet WHERE Label ='Service Cloud User'];
+        
+        PermissionSetAssignment psa =new PermissionSetAssignment();
+        psa.AssigneeId=u.Id;
+        psa.PermissionSetId=ps.Id;
+        insert psa;
+        
+        
+    }
