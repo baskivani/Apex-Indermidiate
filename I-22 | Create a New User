@@ -1,0 +1,16 @@
+As a Salesforce administrator, I need to create a new user account for Will Smith so that he can access our Salesforce org.
+
+User newUser = new User ();
+
+newUser.FirstName='Will';
+newUser.LastName='Smith';
+newUser.Alias='wills';
+newUser.Email='willsmith99@vmail.com';
+newUser.username='willsmith99@vmail.com';
+newUser.TimeZoneSidKey='America/Lima';
+newUser.LocaleSidKey='en_US';
+newUser.EmailEncodingKey='UTF-8';
+newUser.LanguageLocaleKey='en_US';
+newUser.ProfileId='00e8c000002lffn';
+insert newUser;
+
