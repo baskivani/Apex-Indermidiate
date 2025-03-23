@@ -1,0 +1,22 @@
+Create a program that updates the field Number_of_Contacts__c 
+
+The field Number of Contacts must show the number of the Contacts each Account has
+
+Hint: Create a field (Number_of_Contacts__c ) with Number data type
+
+public static void UpdateNumberofContacts(){
+        
+        List<Account> acList = [SELECT Id, (SELECT Id FROM Contacts), Number_of_Contacts__c FROM Account WHERE Id  IN (SELECT AccountId FROM Contact)];
+        
+        
+        for(Account ac : acList){
+            
+            ac.Number_of_Contacts__c=ac.Contacts.size();
+        }
+        
+        update acList;
+        
+        
+    }
+
+
