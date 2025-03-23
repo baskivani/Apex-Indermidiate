@@ -1,0 +1,18 @@
+As a Salesforce administrator, I need to update the titles of contacts in the Finance department to "Financial Analyst" for better reporting and organization. To achieve this, I first created a list of contacts using the Contact object and added them to a list. I then used a single DML call to insert all the contacts into the database. Next, I iterated through the list of contacts and checked if their department was Finance. If it was, I updated their title to "Financial Analyst" and added the updated contact to a list to be bulk updated with a single DML call. Finally, I performed the bulk update only if there were contacts to update. With this process, I was able to efficiently update the titles for all contacts in the Finance department in Salesforce.
+
+    public static void updateTitlesOfContact(){
+        
+        List<Contact> conList = [Select Id, Title, Department From Contact];
+        
+        for (Contact con : conList){
+            
+            if (con.Department == 'Finance'){
+                con.Title ='Financial Analyst';
+            }
+        }
+        if (conList.size() != 0 ){
+            
+            update conList;
+            
+        }
+    }
