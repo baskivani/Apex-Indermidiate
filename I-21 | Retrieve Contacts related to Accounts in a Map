@@ -1,0 +1,9 @@
+As a Salesforce developer, I need to retrieve a list of contacts related to a set of accounts identified by their Ids.
+
+    public static void retrieveContactsRelatedAccountsWithMap(){
+        
+        Map<Id, Account> mapAc = new Map<Id,Account>([Select Id From Account]);
+        
+        List<Contact> conList = [Select Id, Name From Contact Where AccountId In :mapAc.keySet()];
+        
+    }   
