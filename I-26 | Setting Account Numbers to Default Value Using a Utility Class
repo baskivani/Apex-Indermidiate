@@ -1,0 +1,15 @@
+As an admin,
+
+I want to be able to update the account numbers for multiple customer accounts,
+
+So that I can easily assign a common account number to a group of accounts.
+
+public class AccountUtility{
+   public static void setAccountNumber(Account[] acList) {
+      for (Account ac : acList){
+         ac.AccountNumber = '1234567';
+      }
+        update acList;
+   }
+}
+
