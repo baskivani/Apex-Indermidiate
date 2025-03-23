@@ -1,0 +1,20 @@
+Create a program that updates the Shipping Address same as the Billing Address when Billing Country is USA
+
+
+public static void UpdateBillingAddressUSA(){
+        
+        List<Account> acList =[SELECT Id, ShippingCity, ShippingCountry,ShippingPostalCode, ShippingState, ShippingStreet,
+                               BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet
+                               FROM Account WHERE BillingCountry='USA'];
+        
+        for(Account ac : acList){
+            ac.ShippingCity=ac.BillingCity;
+            ac.ShippingCountry=ac.BillingCountry;
+            ac.ShippingPostalCode=ac.BillingPostalCode;
+            ac.ShippingState=ac.BillingState;
+            ac.ShippingStreet=ac.BillingStreet;
+        }
+        
+        update acList;
+        
+    }
