@@ -1,0 +1,10 @@
+As a Salesforce administrator, I want to add a specific user with the username 'admin@pathtosalesforce.com' to a group named 'Service Team' so that the user can access the resources and information available to that group.
+
+User u = [SELECT Id, Username FROM User WHERE Username='admin@pathtosalesforce.com'];
+Group grp =[SELECT Id FROM Group WHERE Name ='Service Team'];
+
+GroupMember grm=new GroupMember();
+grm.GroupId=grp.Id;
+grm.UserOrGroupId=u.Id;
+insert grm;
+
