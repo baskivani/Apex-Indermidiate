@@ -1,0 +1,10 @@
+As a system administrator, I want to delete all Contacts that are not associated with any Account so that the data in the system remains clean and accurate. This will be accomplished by executing a method that retrieves all Contacts with no associated Account, and then deletes them from the system. If there are no such Contacts, no action will be taken.
+public static void deletecontacts(){
+        List<Contact> conList= [SELECT Id FROM Contact WHERE AccountId=null];
+        if(conList.size()!=0){
+            delete conList;
+        }
+}
+
+
+
