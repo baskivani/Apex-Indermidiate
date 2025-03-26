@@ -1,0 +1,6 @@
+As a Salesforce administrator, I want to retrieve the number of users who are currently frozen due to failed login attempts so that I can investigate and take appropriate action to resolve the issue.
+
+List<UserLogin> frozenUsers = [SELECT Id, isFrozen FROM UserLogin WHERE isFrozen=true];
+
+System.debug(frozenUsers.size());
+
