@@ -1,0 +1,12 @@
+As a Salesforce user, I want to create a new Account record with a specific name if an Account record with the same name does not already exist in the org.
+
+Account ac = new Account();
+
+String acName ='Blue Moon Hotel';
+List<Account> acList = [SELECT Id, Name FROM Account WHERE name =: acName];
+
+if(acList.size()==0){
+    ac.Name=acName;
+}
+insert ac;
+
