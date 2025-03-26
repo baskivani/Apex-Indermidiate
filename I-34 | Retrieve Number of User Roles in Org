@@ -1,0 +1,6 @@
+As a Salesforce administrator, I want to retrieve the number of available User Roles in the org so that I can monitor and manage them effectively.
+
+List<UserRole> roleList =[SELECT Id FROM  UserRole];
+
+System.debug(roleList.size());
+
