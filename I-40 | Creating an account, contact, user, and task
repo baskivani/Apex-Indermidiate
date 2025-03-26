@@ -1,0 +1,47 @@
+As a sales manager, I want to create a new account, contact, and user, and link them together so that I can assign tasks to the appropriate contact and account with the help of my team member.
+
+
+Account newAccount = new Account();
+newAccount.Name = 'My Test Account';
+insert newAccount;
+
+
+Contact newContact = new Contact();
+newContact.FirstName = 'John';
+newContact.LastName = 'Doe';
+newContact.Email = 'johndoe@example.com';
+newContact.AccountId = newAccount.Id;
+insert newContact;
+
+Profile identityProfile = [SELECT Id FROM Profile WHERE Name = 'Identity User' LIMIT 1];
+
+User newUser = new User();
+newUser.FirstName = 'Jane';
+newUser.LastName = 'Doe';
+newUser.Email = 'janedoe2@example.com';
+newUser.Username = 'janedoe2@example.com';
+newUser.Alias = 'jdoe';
+newUser.CommunityNickname = 'jane_doe';
+newUser.TimeZoneSidKey = 'America/Los_Angeles';
+newUser.LocaleSidKey = 'en_US';
+newUser.EmailEncodingKey = 'UTF-8';
+newUser.LanguageLocaleKey = 'en_US';
+newUser.ProfileId = identityProfile.Id;
+insert newUser;
+
+Task t = new Task();
+t.Subject = 'Follow-up call';
+t.Description = 'Call customer to follow-up on the recent purchase';
+t.Status = 'In Progress';
+t.Priority = 'Normal';
+t.ActivityDate = Date.today();
+t.CallDurationInSeconds = 300;
+t.WhatId = newAccount.Id;
+t.WhoId = newContact.Id;
+t.OwnerId=newUser.Id;
+t.IsReminderSet = true;
+t.ReminderDateTime = Datetime.newInstance(Date.today(), Time.newInstance(10, 0, 0, 000));
+t.Description = 'This is a sample description';
+
+insert t;
+ 
