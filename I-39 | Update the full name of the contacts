@@ -1,0 +1,14 @@
+As a sales representative at XYZ company, I need to view a list of all contacts in the system and have their full name displayed in a separate field for easier identification.
+
+To achieve this, the ContactUtility class has been created with a viewContacts() method. This method queries the Contact object to retrieve the first name, last name, and a custom field called full_name__c. It then loops through the list of contacts and concatenates the first and last names to populate the full_name__c field. Finally, it updates the contact records to reflect this change.
+
+public class ContactUtility {
+    public static void viewContacts(){
+        List<Contact> conList = [SELECT FirstName, LastName, full_name__c  FROM Contact];
+        for (Contact con : conList){
+            con.full_name__c = con.FirstName +' ' + con.LastName;
+        }
+        update conList;
+    }
+}
+
