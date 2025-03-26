@@ -1,0 +1,14 @@
+As a Salesforce administrator, I want to permanently delete all the records that have been deleted by the users in the org and are currently residing in the Recycle Bin so that I can free up storage space and maintain data integrity.
+
+List<Account> acList =[SELECT Id, isdeleted FROM Account WHERE isdeleted =true ALL ROWS];
+List<Contact> conList =[SELECT Id, isdeleted FROM Contact  WHERE isdeleted =true ALL ROWS];
+List<Case> caseList =[SELECT Id, isdeleted FROM Case  WHERE isdeleted =true ALL ROWS];
+List<Opportunity> oppList =[SELECT Id, isdeleted FROM Opportunity  WHERE isdeleted =true ALL ROWS];
+
+List<SObject> RecBinList = new List<SObject>();
+RecBinList.addALL(acList);
+RecBinList.addALL(conList);
+RecBinList.addALL(caseList);
+RecBinList.addALL(oppList);
+
+Database.emptyRecycleBin(RecBinList);
