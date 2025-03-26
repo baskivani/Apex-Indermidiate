@@ -1,0 +1,19 @@
+As a sales representative, I want to quickly create a new account for a prospective customer so that I can begin tracking their information and progress.
+
+I can use the AccountUtility class to create a single account. This class contains a method called "CreateSingleAccount()" that creates a new Account record with the name "Blue Moon Hotel".
+
+When I call this method, it will insert the new account record into Salesforce and return the newly created Account object. I can then use this object to add additional information to the account as needed. 
+
+public class AccountUtility {
+    
+    public static Account CreateSingleAccount(){
+        
+        Account ac = new Account();
+        ac.Name='Blue Moon Hotel';
+        insert ac;
+        
+        return ac;
+    }
+
+}
+
