@@ -1,0 +1,16 @@
+As a sales manager, I want to update the phone number of my contact, Mario Ruiz, and also update the industry of the account associated with him to "Technology". So, I search for the contact with the name "Mario Ruiz" and retrieve his associated account's name using a SOQL query. I then update his phone number to (415)555-1213 and his associated account's industry to "Technology". Finally, I make two separate calls to update the contact's phone number and the related account's industry field.
+
+Contact con = [SELECT Account.Name 
+                          FROM Contact 
+                          WHERE FirstName = 'Mario' AND LastName='Ruiz'
+                          LIMIT 1];
+
+con.Phone = '(415)555-1213';
+
+con.Account.Industry = 'Technology';
+
+update con;
+
+update con.Account; 
+
+
