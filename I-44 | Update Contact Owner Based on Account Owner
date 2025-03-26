@@ -1,0 +1,12 @@
+As a Salesforce developer, I want to create a method in Apex that updates the owner of all the contacts associated with an account to match the account owner. The method should query all contacts with a non-null account ID, update their owner ID to match the account owner ID, and then update the contacts in the database. This will ensure that contact ownership is consistent with account ownership, and make it easier for sales reps to manage their contacts.
+
+public static void updateContacts(){
+        List<Contact> conList= [SELECT Id, OwnerId, Account.OwnerId FROM Contact WHERE AccountId!=null];
+        for(Contact con: conList){
+            con.OwnerId= con.Account.OwnerId;
+        }
+    if(conList.size()>0){
+        update conList;
+    }
+}
+
