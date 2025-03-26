@@ -1,0 +1,9 @@
+As a Salesforce administrator, I want to update the first name and last name of a specific user in the org so that their profile information is accurate and up to date.
+
+public static void updateUser(){
+        User u= [SELECT Id FROM User WHERE UserName='practice@verizon.org' LIMIT 1];
+        u.FirstName= 'Haley';
+        u.LastName= 'Berry';
+        update u;
+}
+
