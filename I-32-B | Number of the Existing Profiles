@@ -1,0 +1,8 @@
+As a Salesforce administrator, I want to retrieve the total number of profiles available in the org so that I can monitor and manage the profiles effectively.
+
+public static Integer numberofprofiles(){
+        List<Profile> myProfiles= [SELECT Id, Name FROM Profile];
+        return myProfiles.size();
+    }
+}
+
