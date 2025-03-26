@@ -1,0 +1,26 @@
+As a sales representative, I want to create a new lead record with all required details such as First Name, Last Name, and Company. If the lead status is "Closed - Converted", then I want to convert the lead into an account and a contact record, without creating a new opportunity. I want to make sure that the lead is converted with the correct converted status and that I can obtain the IDs of the newly created account and contact records.
+
+Lead newLead = new Lead();
+newLead.FirstName = 'John';
+newLead.LastName = 'Doe';
+newLead.Company = 'ABC Company';
+newLead.Status = 'Closed - Converted';
+insert newLead;
+
+if(newLead.Status == 'Closed - Converted'){
+    Database.LeadConvert lc = new database.LeadConvert();
+    lc.setLeadId(newLead.Id);
+    lc.setDoNotCreateOpportunity(true);
+    
+    LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted=true LIMIT 1];
+    
+    lc.setConvertedStatus(convertStatus.MasterLabel);
+
+    Database.LeadConvertResult lcr = Database.convertLead(lc);
+
+
+    Id newAccountId = lcr.getAccountId();
+    Id newContactId = lcr.getContactId();
+
+}
+
