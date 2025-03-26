@@ -1,0 +1,5 @@
+As a developer, I want to retrieve and display the Id, name, and table or object name associated with all the Apex triggers in the org so that I can review the trigger information for debugging and maintenance purposes.
+
+List<ApexTrigger> triggersToDelete = [SELECT Id, Name, TableEnumOrId FROM ApexTrigger];
+System.debug(triggersToDelete);
+
