@@ -1,0 +1,11 @@
+Develop Apex code to create a new Salesforce Collaboration Group named 'PTS GROUP NEW' and set it to be accessible to the public.
+
+First Way
+
+CollaborationGroup GR = new CollaborationGroup(Name='PTS GROUP NEW', CollaborationType='Public');
+
+insert GR;
+Second Way
+
+insert new CollaborationGroup(Name='PTS GROUP NEW 2', CollaborationType='Public');
+
