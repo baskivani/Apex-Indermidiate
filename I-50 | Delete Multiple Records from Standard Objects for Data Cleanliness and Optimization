@@ -1,0 +1,34 @@
+As a Salesforce administrator, I want to delete a list of records from various standard objects to ensure data cleanliness and optimize system performance.
+
+Note: Put all the records in a list.
+
+ 
+List<sObject> recordList = new List<sObject>();
+
+List<Entitlement> enList = [SELECT Id FROM Entitlement];
+
+recordList.addAll(enList);
+
+List<Case> caseList = [SELECT Id FROM Case];
+
+recordList.addAll(caseList);
+
+List<Contact> conList = [SELECT Id FROM Contact];
+
+recordList.addAll(conList);
+
+List<Opportunity> OppList = [SELECT Id FROM Opportunity];
+
+recordList.addAll(OppList);
+
+List<Account> acList = [SELECT Id FROM Account];
+
+recordList.addAll(acList);
+
+List<Lead> leadList = [SELECT Id FROM Lead];
+
+recordList.addAll(leadList);
+
+
+delete recordList;
+
