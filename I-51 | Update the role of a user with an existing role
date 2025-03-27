@@ -1,0 +1,10 @@
+As a Salesforce administrator, I want to update the role of a user with an existing role so that their access and permissions align with their current responsibilities and tasks within the organization.
+
+UserRole selectedRole = [SELECT Id, Name, DeveloperName, ParentRoleId FROM UserRole WHERE Name ='Channel Sales Team' LIMIT 1];
+
+User u = [SELECT Name, UserRoleId FROM User WHERE Name ='Engin Basturk' LIMIT 1];
+
+u.UserRoleId = selectedRole.Id;
+
+update u;
+
