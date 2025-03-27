@@ -1,0 +1,20 @@
+As a Salesforce Administrator, I need to be able to delete Queues starting with "Case" in Apex. These Queues are no longer needed and are cluttering up my Salesforce org. I want a way to delete them all at once to save time and ensure that my org remains organized.
+
+
+
+List<Group> queuesToDelete = [SELECT Id FROM Group WHERE Name LIKE 'Case%'];
+
+if (queuesToDelete.size() > 0) {
+    Database.DeleteResult[] deleteResults = Database.delete(queuesToDelete, false);
+    
+    for (Database.DeleteResult result : deleteResults) {
+        if (result.isSuccess()) {
+            System.debug('Queue deleted successfully: ' + result.getId());
+        } else {
+            System.debug('Failed to delete queue: ' + result.getErrors()[0].getMessage());
+        }
+    }
+} else {
+    System.debug('No queues found to delete.');
+}
+
