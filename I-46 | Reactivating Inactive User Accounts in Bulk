@@ -1,0 +1,10 @@
+As a Salesforce administrator, I want to be able to reactivate all the inactive user accounts in bulk so that I can save time and improve the efficiency of my tasks.
+
+List<User> inactiveUsers = [SELECT Id, IsActive FROM User WHERE IsActive = false];
+
+for(User u : inactiveUsers){
+    u.IsActive = true;
+}
+
+update inactiveUsers;
+
