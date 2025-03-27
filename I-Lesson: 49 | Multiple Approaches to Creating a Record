@@ -1,0 +1,15 @@
+As a mentor, I want you to demonstrate and compare different approaches for creating an Account in Salesforce. This will help provide a comprehensive understanding of the available options and their implications.
+
+First Approach:
+
+insert new Account(Name='Bank of America');
+Second Approach:
+
+Account ac = new Account(Name='Bank of America');
+insert ac;
+Third Approach:
+
+Account ac = new Account();
+ac.Name='Bank of America';
+insert ac;
+
