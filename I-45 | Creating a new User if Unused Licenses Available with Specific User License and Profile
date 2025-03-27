@@ -1,0 +1,27 @@
+As a Salesforce administrator, I want to create a new user with specific user license and profile only if there are unused licenses available for the user license, so that I can effectively manage my Salesforce users within the available licenses.
+
+UserLicense uLicense =[SELECT name, TotalLicenses, UsedLicenses FROM UserLicense WHERE Name='Identity' LIMIT 1];
+
+Integer TotalLicenses = uLicense.TotalLicenses;
+Integer UsedLicenses = uLicense.UsedLicenses;
+
+Integer UnusedLicenses = TotalLicenses-UsedLicenses;
+
+if(UnusedLicenses >0){
+    
+    Profile pr=[SELECT Id FROM Profile WHERE Name='Identity User' LIMIT 1];
+        
+        User newUser = new User ();
+        newUser.FirstName='Engin';
+        newUser.LastName='Basturk';
+        newUser.Alias='EnBas';
+        newUser.Email='engin@pathtosalesforce.com';
+        newUser.username='engin@pathtosalesforce.com';
+        newUser.TimeZoneSidKey='America/Lima';
+        newUser.LocaleSidKey='en_US';
+        newUser.EmailEncodingKey='UTF-8';
+        newUser.LanguageLocaleKey='en_US';
+        newUser.ProfileId=pr.Id;
+        insert newUser;
+}
+
