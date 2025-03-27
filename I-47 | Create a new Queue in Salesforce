@@ -1,0 +1,15 @@
+As a Salesforce Administrator, I want to be able to create a new Queue in Apex so that I can better manage and organize my data.
+
+Group newQueue = new Group(
+    Name = 'New Queue',
+    DeveloperName = 'New_Queue',
+    Type = 'Queue'
+);
+
+Database.SaveResult result = Database.insert(newQueue);
+if (result.isSuccess()) {
+    System.debug('New queue created with ID: ' + result.getId());
+} else {
+    System.debug('Failed to create new queue: ' + result.getErrors()[0].getMessage());
+}
+
