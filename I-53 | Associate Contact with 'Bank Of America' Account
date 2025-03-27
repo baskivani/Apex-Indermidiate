@@ -1,0 +1,22 @@
+As a system administrator of our Salesforce instance, I want to ensure that when a new contact is created, it is correctly associated with the "Bank Of America" account if such an account exists in the system.
+
+If the account exists, the contact should be created with the first name "John" and last name "Smith."
+
+This will help us maintain accurate and organized customer data.
+
+List<Account> bankOfAmericaAccounts = [SELECT Id FROM Account WHERE Name = 'Bank Of America' LIMIT 1];
+
+if (bankOfAmericaAccounts.size() != 0) {
+
+    Contact newContact = new Contact();
+    newContact.FirstName = 'John';
+    newContact.LastName = 'Smith';
+    newContact.AccountId = bankOfAmericaAccounts[0].Id;
+
+    insert newContact;
+
+    System.debug('Contact created and related to the Bank Of America account.');
+} else {
+    System.debug('Bank Of America account not found.');
+}
+
